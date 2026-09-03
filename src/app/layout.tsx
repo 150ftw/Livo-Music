@@ -31,8 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} dark antialiased`}>
-      <body className="min-h-screen w-full bg-[#050505] text-[#f5f4f0] font-sans overflow-x-hidden selection:bg-white/20">
+    <html lang="en" className={`${inter.variable} dark antialiased`} suppressHydrationWarning>
+      <body
+        className="min-h-screen w-full bg-[#050505] text-[#f5f4f0] font-sans overflow-x-hidden selection:bg-white/20"
+        suppressHydrationWarning
+      >
         <SpotifyAuthProvider>
           <PlayerProvider>
             <SearchOverlayProvider>
