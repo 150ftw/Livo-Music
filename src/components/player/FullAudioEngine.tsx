@@ -26,9 +26,28 @@ export function FullAudioEngine() {
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentTrackIdRef = useRef<string | null>(null);
 
-  // Initialize YouTube IFrame API
+  // Initialize YouTube IFrame API outside React virtual DOM tree
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    // Create an unmanaged DOM container outside React's tree to prevent insertBefore reconciliation errors
+    let container = document.getElementById("livo-yt-isolated-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "livo-yt-isolated-container";
+      container.style.position = "fixed";
+      container.style.top = "-9999px";
+      container.style.left = "-9999px";
+      container.style.width = "1px";
+      container.style.height = "1px";
+      container.style.opacity = "0";
+      container.style.pointerEvents = "none";
+      document.body.appendChild(container);
+
+      const targetDiv = document.createElement("div");
+      targetDiv.id = "livo-yt-mount-point";
+      container.appendChild(targetDiv);
+    }
 
     if (!window.YT) {
       const tag = document.createElement("script");
@@ -39,8 +58,9 @@ export function FullAudioEngine() {
 
     const initPlayer = () => {
       if (playerRef.current) return;
+      if (!document.getElementById("livo-yt-mount-point")) return;
 
-      playerRef.current = new window.YT.Player("livo-full-audio-engine", {
+      playerRef.current = new window.YT.Player("livo-yt-mount-point", {
         height: "1",
         width: "1",
         playerVars: {
@@ -96,7 +116,7 @@ export function FullAudioEngine() {
       }
       playerRef.current.playVideo();
     } catch (e) {
-      console.warn("FullAudioEngine load error:", e);
+      console.warn("FullAudioEngine load notice:", e);
     }
   };
 
@@ -169,19 +189,6 @@ export function FullAudioEngine() {
     return () => window.removeEventListener("livo:seek", handleSeek);
   }, []);
 
-  return (
-    <div
-      id="livo-full-audio-engine"
-      style={{
-        position: "fixed",
-        top: -9999,
-        left: -9999,
-        width: 1,
-        height: 1,
-        opacity: 0,
-        pointerEvents: "none",
-      }}
-      aria-hidden="true"
-    />
-  );
+  // Return null so React's Virtual DOM never touches YouTube's replaced iframe
+  return null;
 }
