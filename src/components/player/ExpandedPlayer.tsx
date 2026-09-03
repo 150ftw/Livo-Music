@@ -221,32 +221,121 @@ export function ExpandedPlayer() {
           </AnimatePresence>
         </div>
 
-        {/* Official Spotify Embed Player Component */}
-        <div className="w-full max-w-lg space-y-3">
-          <SpotifyOfficialPlayer track={currentTrack} mode="expanded" />
+        {/* Actual Music Player Controls */}
+        <div className="w-full max-w-xl space-y-6">
+          {/* Interactive Timeline Scrubber */}
+          <div className="space-y-2">
+            <div
+              onClick={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+                seek(ratio * duration);
+              }}
+              className="group relative h-2 w-full bg-white/[0.08] hover:bg-white/[0.16] rounded-full overflow-hidden cursor-pointer transition-colors"
+            >
+              <div
+                className="h-full bg-gradient-to-r from-emerald-400 to-white transition-all duration-100 ease-out"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs font-mono text-[#8e8c87]">
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(duration)}</span>
+            </div>
+          </div>
 
-          {/* Prominent Play Full Song in Spotify Action */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
-            <div className="text-left space-y-0.5">
-              <p className="text-xs font-medium text-[#f5f4f0] flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#1DB954]" />
-                Full-Length Playback
-              </p>
-              <p className="text-[11px] text-[#8e8c87]">
-                Stream uninterrupted full track in Spotify app or web
-              </p>
+          {/* Central Transport Controls */}
+          <div className="flex items-center justify-center gap-6">
+            <button
+              onClick={toggleShuffle}
+              className={`p-2.5 rounded-full transition-colors cursor-pointer ${
+                isShuffle ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
+              }`}
+              title="Shuffle"
+            >
+              <Shuffle className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={previousTrack}
+              className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              title="Previous Track"
+            >
+              <SkipBack className="w-6 h-6 fill-current" />
+            </button>
+
+            <button
+              onClick={togglePlay}
+              className="w-16 h-16 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer"
+              title={isPlaying ? "Pause" : "Play"}
+            >
+              {isPlaying ? (
+                <Pause className="w-7 h-7 fill-current" />
+              ) : (
+                <Play className="w-7 h-7 fill-current ml-1" />
+              )}
+            </button>
+
+            <button
+              onClick={nextTrack}
+              className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              title="Next Track"
+            >
+              <SkipForward className="w-6 h-6 fill-current" />
+            </button>
+
+            <button
+              onClick={toggleRepeat}
+              className={`p-2.5 rounded-full transition-colors cursor-pointer ${
+                isRepeat ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
+              }`}
+              title="Repeat"
+            >
+              <Repeat className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Volume Slider & Spotify Attribution */}
+          <div className="flex items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
+            {/* Volume */}
+            <div className="flex items-center gap-2 w-40">
+              <button
+                onClick={toggleMute}
+                className="text-[#8e8c87] hover:text-white transition-colors cursor-pointer"
+              >
+                {isMuted || volume === 0 ? (
+                  <VolumeX className="w-4 h-4" />
+                ) : (
+                  <Volume2 className="w-4 h-4" />
+                )}
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={isMuted ? 0 : volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                className="w-full h-1 bg-white/10 rounded-full accent-white cursor-pointer"
+              />
             </div>
 
-            <a
-              href={`https://open.spotify.com/track/${currentTrack.spotifyId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold text-xs tracking-wide transition-all shadow-[0_0_20px_rgba(29,185,84,0.3)] hover:scale-105 shrink-0 cursor-pointer"
-              title="Play full song in Spotify"
-            >
-              <span>Play in Spotify</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            {/* Credit to Spotify */}
+            <div className="flex items-center gap-2 text-xs font-mono text-[#8e8c87]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Full Song Audio • Powered by Spotify</span>
+              <a
+                href={currentTrack.spotifyUrl || `https://open.spotify.com/track/${currentTrack.spotifyId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-emerald-400 transition-colors flex items-center gap-1 text-[11px]"
+                title="Open in Spotify"
+              >
+                <span>Spotify</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
           </div>
         </div>
       </main>
