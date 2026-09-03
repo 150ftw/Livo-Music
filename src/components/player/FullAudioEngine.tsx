@@ -103,18 +103,29 @@ export function FullAudioEngine() {
     };
   }, []);
 
-  const loadAndPlay = (track: any) => {
+  const loadAndPlay = async (track: any) => {
     if (!playerRef.current || !isReadyRef.current) return;
     try {
-      if (track.youtubeId) {
-        playerRef.current.loadVideoById(track.youtubeId, 0);
-      } else {
-        playerRef.current.loadPlaylist({
-          listType: "search",
-          list: `${track.artist} ${track.title} Official Audio`,
-        });
+      let videoId = track.youtubeId;
+      if (!videoId || typeof videoId !== "string" || videoId.length !== 11) {
+        // Dynamically resolve exact 11-char videoId from our internal API
+        const res = await fetch(
+          `/api/music/resolve-yt?title=${encodeURIComponent(
+            track.title
+          )}&artist=${encodeURIComponent(track.artist)}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.videoId && data.videoId.length === 11) {
+            videoId = data.videoId;
+          }
+        }
       }
-      playerRef.current.playVideo();
+
+      if (videoId && videoId.length === 11) {
+        playerRef.current.loadVideoById(videoId, 0);
+        playerRef.current.playVideo();
+      }
     } catch (e) {
       console.warn("FullAudioEngine load notice:", e);
     }

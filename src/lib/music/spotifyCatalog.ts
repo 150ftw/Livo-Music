@@ -15,7 +15,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2014,
     "spotifyId": "5MhMXTuVODDF234VDvSxQx",
     "spotifyUrl": "https://open.spotify.com/track/5MhMXTuVODDF234VDvSxQx",
-    "spotifyUri": "spotify:track:5MhMXTuVODDF234VDvSxQx"
+    "spotifyUri": "spotify:track:5MhMXTuVODDF234VDvSxQx",
+    "youtubeId": "6XJBDX3Z0BY"
   },
   {
     "id": "3rCtueI7qBN2kZBZnXuk5K",
@@ -29,7 +30,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2019,
     "spotifyId": "3rCtueI7qBN2kZBZnXuk5K",
     "spotifyUrl": "https://open.spotify.com/track/3rCtueI7qBN2kZBZnXuk5K",
-    "spotifyUri": "spotify:track:3rCtueI7qBN2kZBZnXuk5K"
+    "spotifyUri": "spotify:track:3rCtueI7qBN2kZBZnXuk5K",
+    "youtubeId": "0W-a11Tdk7Y"
   },
   {
     "id": "2aJDlirz6v2a4HREki98cP",
@@ -43,7 +45,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2017,
     "spotifyId": "2aJDlirz6v2a4HREki98cP",
     "spotifyUrl": "https://open.spotify.com/track/2aJDlirz6v2a4HREki98cP",
-    "spotifyUri": "spotify:track:2aJDlirz6v2a4HREki98cP"
+    "spotifyUri": "spotify:track:2aJDlirz6v2a4HREki98cP",
+    "youtubeId": "q5rliCxX8xc"
   },
   {
     "id": "5S3F5GL8LASIjPg2PMiU1Q",
@@ -57,7 +60,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2018,
     "spotifyId": "5S3F5GL8LASIjPg2PMiU1Q",
     "spotifyUrl": "https://open.spotify.com/track/5S3F5GL8LASIjPg2PMiU1Q",
-    "spotifyUri": "spotify:track:5S3F5GL8LASIjPg2PMiU1Q"
+    "spotifyUri": "spotify:track:5S3F5GL8LASIjPg2PMiU1Q",
+    "youtubeId": "4sk0uDbM5lc"
   },
   {
     "id": "5kJ4BWZ9Y1qFIwwTbMIxYX",
@@ -71,7 +75,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2020,
     "spotifyId": "5kJ4BWZ9Y1qFIwwTbMIxYX",
     "spotifyUrl": "https://open.spotify.com/track/5kJ4BWZ9Y1qFIwwTbMIxYX",
-    "spotifyUri": "spotify:track:5kJ4BWZ9Y1qFIwwTbMIxYX"
+    "spotifyUri": "spotify:track:5kJ4BWZ9Y1qFIwwTbMIxYX",
+    "youtubeId": "MCRiUi28UpA"
   },
   {
     "id": "7jZHUhAmW5oq1cq6s8IxmK",
@@ -85,7 +90,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2014,
     "spotifyId": "7jZHUhAmW5oq1cq6s8IxmK",
     "spotifyUrl": "https://open.spotify.com/track/7jZHUhAmW5oq1cq6s8IxmK",
-    "spotifyUri": "spotify:track:7jZHUhAmW5oq1cq6s8IxmK"
+    "spotifyUri": "spotify:track:7jZHUhAmW5oq1cq6s8IxmK",
+    "youtubeId": "cwLRN5sdfnA"
   },
   {
     "id": "24ntSW3QVJzR79lHAAOTaY",
@@ -99,7 +105,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2020,
     "spotifyId": "24ntSW3QVJzR79lHAAOTaY",
     "spotifyUrl": "https://open.spotify.com/track/24ntSW3QVJzR79lHAAOTaY",
-    "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY"
+    "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY",
+    "youtubeId": "zSWNWWREtsI"
   },
   {
     "id": "75IQVo8hqI1iwVZyvkN2VT",
@@ -113,7 +120,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2018,
     "spotifyId": "75IQVo8hqI1iwVZyvkN2VT",
     "spotifyUrl": "https://open.spotify.com/track/75IQVo8hqI1iwVZyvkN2VT",
-    "spotifyUri": "spotify:track:75IQVo8hqI1iwVZyvkN2VT"
+    "spotifyUri": "spotify:track:75IQVo8hqI1iwVZyvkN2VT",
+    "youtubeId": "cJRFMfztgBg"
   },
   {
     "id": "1Snko28yJOihcRVXs9dAo9",
@@ -127,7 +135,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2014,
     "spotifyId": "1Snko28yJOihcRVXs9dAo9",
     "spotifyUrl": "https://open.spotify.com/track/1Snko28yJOihcRVXs9dAo9",
-    "spotifyUri": "spotify:track:1Snko28yJOihcRVXs9dAo9"
+    "spotifyUri": "spotify:track:1Snko28yJOihcRVXs9dAo9",
+    "youtubeId": "MJoSyNdffGo"
   },
   {
     "id": "1oAwsWBovWRIp7qLMGPIet",
@@ -141,7 +150,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2017,
     "spotifyId": "1oAwsWBovWRIp7qLMGPIet",
     "spotifyUrl": "https://open.spotify.com/track/1oAwsWBovWRIp7qLMGPIet",
-    "spotifyUri": "spotify:track:1oAwsWBovWRIp7qLMGPIet"
+    "spotifyUri": "spotify:track:1oAwsWBovWRIp7qLMGPIet",
+    "youtubeId": "sElE_BfQ67s"
   },
   {
     "id": "1wicceeNVtcnym2YjiOmyj",
@@ -155,7 +165,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2019,
     "spotifyId": "1wicceeNVtcnym2YjiOmyj",
     "spotifyUrl": "https://open.spotify.com/track/1wicceeNVtcnym2YjiOmyj",
-    "spotifyUri": "spotify:track:1wicceeNVtcnym2YjiOmyj"
+    "spotifyUri": "spotify:track:1wicceeNVtcnym2YjiOmyj",
+    "youtubeId": "L9HYJbe9Y18"
   },
   {
     "id": "7eqoqGkKwgOaWNNHx90uEZ",
@@ -169,7 +180,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2016,
     "spotifyId": "7eqoqGkKwgOaWNNHx90uEZ",
     "spotifyUrl": "https://open.spotify.com/track/7eqoqGkKwgOaWNNHx90uEZ",
-    "spotifyUri": "spotify:track:7eqoqGkKwgOaWNNHx90uEZ"
+    "spotifyUri": "spotify:track:7eqoqGkKwgOaWNNHx90uEZ",
+    "youtubeId": "r4l9bFqgMaQ"
   },
   {
     "id": "2p8IUWQDrpjuFltbdgLOag",
@@ -183,7 +195,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2020,
     "spotifyId": "2p8IUWQDrpjuFltbdgLOag",
     "spotifyUrl": "https://open.spotify.com/track/2p8IUWQDrpjuFltbdgLOag",
-    "spotifyUri": "spotify:track:2p8IUWQDrpjuFltbdgLOag"
+    "spotifyUri": "spotify:track:2p8IUWQDrpjuFltbdgLOag",
+    "youtubeId": "ygTZZpVkmKg"
   },
   {
     "id": "7IVukH71OXfAu3KudrrizN",
@@ -239,7 +252,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2016,
     "spotifyId": "3vQ4T78TTMOjQXGfXVKQJo",
     "spotifyUrl": "https://open.spotify.com/track/3vQ4T78TTMOjQXGfXVKQJo",
-    "spotifyUri": "spotify:track:3vQ4T78TTMOjQXGfXVKQJo"
+    "spotifyUri": "spotify:track:3vQ4T78TTMOjQXGfXVKQJo",
+    "youtubeId": "Kp7eSUU9oy8"
   },
   {
     "id": "1BncfTJAWxrsxyT9culBrj",
@@ -253,7 +267,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2013,
     "spotifyId": "1BncfTJAWxrsxyT9culBrj",
     "spotifyUrl": "https://open.spotify.com/track/1BncfTJAWxrsxyT9culBrj",
-    "spotifyUri": "spotify:track:1BncfTJAWxrsxyT9culBrj"
+    "spotifyUri": "spotify:track:1BncfTJAWxrsxyT9culBrj",
+    "youtubeId": "hN_q-_nGv4U"
   },
   {
     "id": "56oReVXIfUO9xkX7pHmEU0",
@@ -393,7 +408,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2017,
     "spotifyId": "5GbVzc6Ex5LYlLJqzRQhuy",
     "spotifyUrl": "https://open.spotify.com/track/5GbVzc6Ex5LYlLJqzRQhuy",
-    "spotifyUri": "spotify:track:5GbVzc6Ex5LYlLJqzRQhuy"
+    "spotifyUri": "spotify:track:5GbVzc6Ex5LYlLJqzRQhuy",
+    "youtubeId": "4WTt69YO2yo"
   },
   {
     "id": "35KiiILklye1JRRctaLUb4",
@@ -407,7 +423,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2011,
     "spotifyId": "35KiiILklye1JRRctaLUb4",
     "spotifyUrl": "https://open.spotify.com/track/35KiiILklye1JRRctaLUb4",
-    "spotifyUri": "spotify:track:35KiiILklye1JRRctaLUb4"
+    "spotifyUri": "spotify:track:35KiiILklye1JRRctaLUb4",
+    "youtubeId": "TWcyIpul8OE"
   },
   {
     "id": "0U0ldCRmgCqhVvD6ksG63j",
@@ -421,7 +438,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2010,
     "spotifyId": "0U0ldCRmgCqhVvD6ksG63j",
     "spotifyUrl": "https://open.spotify.com/track/0U0ldCRmgCqhVvD6ksG63j",
-    "spotifyUri": "spotify:track:0U0ldCRmgCqhVvD6ksG63j"
+    "spotifyUri": "spotify:track:0U0ldCRmgCqhVvD6ksG63j",
+    "youtubeId": "MV_3Dpw-BRY"
   },
   {
     "id": "5BAJDNTutBFJL27pKunac1",
@@ -463,7 +481,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2011,
     "spotifyId": "6GyFP1nfCDB8lbD2bG0Hq9",
     "spotifyUrl": "https://open.spotify.com/track/6GyFP1nfCDB8lbD2bG0Hq9",
-    "spotifyUri": "spotify:track:6GyFP1nfCDB8lbD2bG0Hq9"
+    "spotifyUri": "spotify:track:6GyFP1nfCDB8lbD2bG0Hq9",
+    "youtubeId": "dX3k_QDnzHE"
   },
   {
     "id": "5VKEsChbUowEF2BT0gJSGX",
@@ -491,7 +510,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2014,
     "spotifyId": "2NHkwSwm6C6eAX3z6xm7Uy",
     "spotifyUrl": "https://open.spotify.com/track/2NHkwSwm6C6eAX3z6xm7Uy",
-    "spotifyUri": "spotify:track:2NHkwSwm6C6eAX3z6xm7Uy"
+    "spotifyUri": "spotify:track:2NHkwSwm6C6eAX3z6xm7Uy",
+    "youtubeId": "8GW6sLrK40k"
   },
   {
     "id": "5kadOt1O3LrIV46dns9v7u",
@@ -505,7 +525,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2007,
     "spotifyId": "5kadOt1O3LrIV46dns9v7u",
     "spotifyUrl": "https://open.spotify.com/track/5kadOt1O3LrIV46dns9v7u",
-    "spotifyUri": "spotify:track:5kadOt1O3LrIV46dns9v7u"
+    "spotifyUri": "spotify:track:5kadOt1O3LrIV46dns9v7u",
+    "youtubeId": "IlEkvbRmfrA"
   },
   {
     "id": "1YGxSgWIWqxKuLLocPVxhC",
@@ -519,7 +540,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2023,
     "spotifyId": "1YGxSgWIWqxKuLLocPVxhC",
     "spotifyUrl": "https://open.spotify.com/track/1YGxSgWIWqxKuLLocPVxhC",
-    "spotifyUri": "spotify:track:1YGxSgWIWqxKuLLocPVxhC"
+    "spotifyUri": "spotify:track:1YGxSgWIWqxKuLLocPVxhC",
+    "youtubeId": "9g2s11e1vQc"
   },
   {
     "id": "4Z4i631BesV0P6LTvfLAdL",
@@ -603,7 +625,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2014,
     "spotifyId": "2bB6iDVgm25WkYv0yBz1BD",
     "spotifyUrl": "https://open.spotify.com/track/2bB6iDVgm25WkYv0yBz1BD",
-    "spotifyUri": "spotify:track:2bB6iDVgm25WkYv0yBz1BD"
+    "spotifyUri": "spotify:track:2bB6iDVgm25WkYv0yBz1BD",
+    "youtubeId": "zJg5gB3q46E"
   },
   {
     "id": "6XmY3xNVGemozNMApOCobZ",
@@ -631,7 +654,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2005,
     "spotifyId": "6eTGxxQxiTFE6LfZHC33Wm",
     "spotifyUrl": "https://open.spotify.com/track/6eTGxxQxiTFE6LfZHC33Wm",
-    "spotifyUri": "spotify:track:6eTGxxQxiTFE6LfZHC33Wm"
+    "spotifyUri": "spotify:track:6eTGxxQxiTFE6LfZHC33Wm",
+    "youtubeId": "mZTb8WxEWl8"
   },
   {
     "id": "2wA8cQwmSw0eVVhOfNRDuZ",
@@ -869,7 +893,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 2001,
     "spotifyId": "1uaGSDFsLdReQgg8p7Obwh",
     "spotifyUrl": "https://open.spotify.com/track/1uaGSDFsLdReQgg8p7Obwh",
-    "spotifyUri": "spotify:track:1uaGSDFsLdReQgg8p7Obwh"
+    "spotifyUri": "spotify:track:1uaGSDFsLdReQgg8p7Obwh",
+    "youtubeId": "PeLuQ6X2ixI"
   },
   {
     "id": "5Hf2h59YLInKlic7ooWZVd",
@@ -883,7 +908,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 1998,
     "spotifyId": "5Hf2h59YLInKlic7ooWZVd",
     "spotifyUrl": "https://open.spotify.com/track/5Hf2h59YLInKlic7ooWZVd",
-    "spotifyUri": "spotify:track:5Hf2h59YLInKlic7ooWZVd"
+    "spotifyUri": "spotify:track:5Hf2h59YLInKlic7ooWZVd",
+    "youtubeId": "yT0gRc2c2wQ"
   },
   {
     "id": "67Hna13dNDkZvBpTXRIaOJ",
@@ -897,7 +923,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 1998,
     "spotifyId": "67Hna13dNDkZvBpTXRIaOJ",
     "spotifyUrl": "https://open.spotify.com/track/67Hna13dNDkZvBpTXRIaOJ",
-    "spotifyUri": "spotify:track:67Hna13dNDkZvBpTXRIaOJ"
+    "spotifyUri": "spotify:track:67Hna13dNDkZvBpTXRIaOJ",
+    "youtubeId": "u7K72X4eo_s"
   },
   {
     "id": "3Ty7OTBNSigGEpeW2PqcsC",
@@ -911,7 +938,8 @@ export const SPOTIFY_TRACKS: Track[] = [
     "year": 1994,
     "spotifyId": "3Ty7OTBNSigGEpeW2PqcsC",
     "spotifyUrl": "https://open.spotify.com/track/3Ty7OTBNSigGEpeW2PqcsC",
-    "spotifyUri": "spotify:track:3Ty7OTBNSigGEpeW2PqcsC"
+    "spotifyUri": "spotify:track:3Ty7OTBNSigGEpeW2PqcsC",
+    "youtubeId": "4qQyG8KoQ1g"
   },
   {
     "id": "409z4jUHpq7eIkg3N3FzZh",
@@ -954,7 +982,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2014,
         "spotifyId": "5MhMXTuVODDF234VDvSxQx",
         "spotifyUrl": "https://open.spotify.com/track/5MhMXTuVODDF234VDvSxQx",
-        "spotifyUri": "spotify:track:5MhMXTuVODDF234VDvSxQx"
+        "spotifyUri": "spotify:track:5MhMXTuVODDF234VDvSxQx",
+        "youtubeId": "6XJBDX3Z0BY"
       },
       {
         "id": "3rCtueI7qBN2kZBZnXuk5K",
@@ -968,7 +997,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2019,
         "spotifyId": "3rCtueI7qBN2kZBZnXuk5K",
         "spotifyUrl": "https://open.spotify.com/track/3rCtueI7qBN2kZBZnXuk5K",
-        "spotifyUri": "spotify:track:3rCtueI7qBN2kZBZnXuk5K"
+        "spotifyUri": "spotify:track:3rCtueI7qBN2kZBZnXuk5K",
+        "youtubeId": "0W-a11Tdk7Y"
       },
       {
         "id": "2aJDlirz6v2a4HREki98cP",
@@ -982,7 +1012,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2017,
         "spotifyId": "2aJDlirz6v2a4HREki98cP",
         "spotifyUrl": "https://open.spotify.com/track/2aJDlirz6v2a4HREki98cP",
-        "spotifyUri": "spotify:track:2aJDlirz6v2a4HREki98cP"
+        "spotifyUri": "spotify:track:2aJDlirz6v2a4HREki98cP",
+        "youtubeId": "q5rliCxX8xc"
       },
       {
         "id": "5S3F5GL8LASIjPg2PMiU1Q",
@@ -996,7 +1027,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2018,
         "spotifyId": "5S3F5GL8LASIjPg2PMiU1Q",
         "spotifyUrl": "https://open.spotify.com/track/5S3F5GL8LASIjPg2PMiU1Q",
-        "spotifyUri": "spotify:track:5S3F5GL8LASIjPg2PMiU1Q"
+        "spotifyUri": "spotify:track:5S3F5GL8LASIjPg2PMiU1Q",
+        "youtubeId": "4sk0uDbM5lc"
       },
       {
         "id": "5kJ4BWZ9Y1qFIwwTbMIxYX",
@@ -1010,7 +1042,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2020,
         "spotifyId": "5kJ4BWZ9Y1qFIwwTbMIxYX",
         "spotifyUrl": "https://open.spotify.com/track/5kJ4BWZ9Y1qFIwwTbMIxYX",
-        "spotifyUri": "spotify:track:5kJ4BWZ9Y1qFIwwTbMIxYX"
+        "spotifyUri": "spotify:track:5kJ4BWZ9Y1qFIwwTbMIxYX",
+        "youtubeId": "MCRiUi28UpA"
       },
       {
         "id": "7jZHUhAmW5oq1cq6s8IxmK",
@@ -1024,7 +1057,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2014,
         "spotifyId": "7jZHUhAmW5oq1cq6s8IxmK",
         "spotifyUrl": "https://open.spotify.com/track/7jZHUhAmW5oq1cq6s8IxmK",
-        "spotifyUri": "spotify:track:7jZHUhAmW5oq1cq6s8IxmK"
+        "spotifyUri": "spotify:track:7jZHUhAmW5oq1cq6s8IxmK",
+        "youtubeId": "cwLRN5sdfnA"
       }
     ],
     "followersCount": 18164,
@@ -1063,7 +1097,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2020,
         "spotifyId": "24ntSW3QVJzR79lHAAOTaY",
         "spotifyUrl": "https://open.spotify.com/track/24ntSW3QVJzR79lHAAOTaY",
-        "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY"
+        "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY",
+        "youtubeId": "zSWNWWREtsI"
       },
       {
         "id": "75IQVo8hqI1iwVZyvkN2VT",
@@ -1077,7 +1112,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2018,
         "spotifyId": "75IQVo8hqI1iwVZyvkN2VT",
         "spotifyUrl": "https://open.spotify.com/track/75IQVo8hqI1iwVZyvkN2VT",
-        "spotifyUri": "spotify:track:75IQVo8hqI1iwVZyvkN2VT"
+        "spotifyUri": "spotify:track:75IQVo8hqI1iwVZyvkN2VT",
+        "youtubeId": "cJRFMfztgBg"
       },
       {
         "id": "24ntSW3QVJzR79lHAAOTaY",
@@ -1091,7 +1127,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2020,
         "spotifyId": "24ntSW3QVJzR79lHAAOTaY",
         "spotifyUrl": "https://open.spotify.com/track/24ntSW3QVJzR79lHAAOTaY",
-        "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY"
+        "spotifyUri": "spotify:track:24ntSW3QVJzR79lHAAOTaY",
+        "youtubeId": "zSWNWWREtsI"
       },
       {
         "id": "1Snko28yJOihcRVXs9dAo9",
@@ -1105,7 +1142,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2014,
         "spotifyId": "1Snko28yJOihcRVXs9dAo9",
         "spotifyUrl": "https://open.spotify.com/track/1Snko28yJOihcRVXs9dAo9",
-        "spotifyUri": "spotify:track:1Snko28yJOihcRVXs9dAo9"
+        "spotifyUri": "spotify:track:1Snko28yJOihcRVXs9dAo9",
+        "youtubeId": "MJoSyNdffGo"
       },
       {
         "id": "1oAwsWBovWRIp7qLMGPIet",
@@ -1119,7 +1157,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2017,
         "spotifyId": "1oAwsWBovWRIp7qLMGPIet",
         "spotifyUrl": "https://open.spotify.com/track/1oAwsWBovWRIp7qLMGPIet",
-        "spotifyUri": "spotify:track:1oAwsWBovWRIp7qLMGPIet"
+        "spotifyUri": "spotify:track:1oAwsWBovWRIp7qLMGPIet",
+        "youtubeId": "sElE_BfQ67s"
       },
       {
         "id": "1wicceeNVtcnym2YjiOmyj",
@@ -1133,7 +1172,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2019,
         "spotifyId": "1wicceeNVtcnym2YjiOmyj",
         "spotifyUrl": "https://open.spotify.com/track/1wicceeNVtcnym2YjiOmyj",
-        "spotifyUri": "spotify:track:1wicceeNVtcnym2YjiOmyj"
+        "spotifyUri": "spotify:track:1wicceeNVtcnym2YjiOmyj",
+        "youtubeId": "L9HYJbe9Y18"
       }
     ],
     "followersCount": 5285,
@@ -1172,7 +1212,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2016,
         "spotifyId": "7eqoqGkKwgOaWNNHx90uEZ",
         "spotifyUrl": "https://open.spotify.com/track/7eqoqGkKwgOaWNNHx90uEZ",
-        "spotifyUri": "spotify:track:7eqoqGkKwgOaWNNHx90uEZ"
+        "spotifyUri": "spotify:track:7eqoqGkKwgOaWNNHx90uEZ",
+        "youtubeId": "r4l9bFqgMaQ"
       },
       {
         "id": "2p8IUWQDrpjuFltbdgLOag",
@@ -1186,7 +1227,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2020,
         "spotifyId": "2p8IUWQDrpjuFltbdgLOag",
         "spotifyUrl": "https://open.spotify.com/track/2p8IUWQDrpjuFltbdgLOag",
-        "spotifyUri": "spotify:track:2p8IUWQDrpjuFltbdgLOag"
+        "spotifyUri": "spotify:track:2p8IUWQDrpjuFltbdgLOag",
+        "youtubeId": "ygTZZpVkmKg"
       },
       {
         "id": "7IVukH71OXfAu3KudrrizN",
@@ -1242,7 +1284,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2016,
         "spotifyId": "3vQ4T78TTMOjQXGfXVKQJo",
         "spotifyUrl": "https://open.spotify.com/track/3vQ4T78TTMOjQXGfXVKQJo",
-        "spotifyUri": "spotify:track:3vQ4T78TTMOjQXGfXVKQJo"
+        "spotifyUri": "spotify:track:3vQ4T78TTMOjQXGfXVKQJo",
+        "youtubeId": "Kp7eSUU9oy8"
       }
     ],
     "followersCount": 21315,
@@ -1281,7 +1324,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2013,
         "spotifyId": "1BncfTJAWxrsxyT9culBrj",
         "spotifyUrl": "https://open.spotify.com/track/1BncfTJAWxrsxyT9culBrj",
-        "spotifyUri": "spotify:track:1BncfTJAWxrsxyT9culBrj"
+        "spotifyUri": "spotify:track:1BncfTJAWxrsxyT9culBrj",
+        "youtubeId": "hN_q-_nGv4U"
       },
       {
         "id": "56oReVXIfUO9xkX7pHmEU0",
@@ -1446,7 +1490,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2017,
         "spotifyId": "5GbVzc6Ex5LYlLJqzRQhuy",
         "spotifyUrl": "https://open.spotify.com/track/5GbVzc6Ex5LYlLJqzRQhuy",
-        "spotifyUri": "spotify:track:5GbVzc6Ex5LYlLJqzRQhuy"
+        "spotifyUri": "spotify:track:5GbVzc6Ex5LYlLJqzRQhuy",
+        "youtubeId": "4WTt69YO2yo"
       },
       {
         "id": "35KiiILklye1JRRctaLUb4",
@@ -1460,7 +1505,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2011,
         "spotifyId": "35KiiILklye1JRRctaLUb4",
         "spotifyUrl": "https://open.spotify.com/track/35KiiILklye1JRRctaLUb4",
-        "spotifyUri": "spotify:track:35KiiILklye1JRRctaLUb4"
+        "spotifyUri": "spotify:track:35KiiILklye1JRRctaLUb4",
+        "youtubeId": "TWcyIpul8OE"
       }
     ],
     "followersCount": 21647,
@@ -1499,7 +1545,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2010,
         "spotifyId": "0U0ldCRmgCqhVvD6ksG63j",
         "spotifyUrl": "https://open.spotify.com/track/0U0ldCRmgCqhVvD6ksG63j",
-        "spotifyUri": "spotify:track:0U0ldCRmgCqhVvD6ksG63j"
+        "spotifyUri": "spotify:track:0U0ldCRmgCqhVvD6ksG63j",
+        "youtubeId": "MV_3Dpw-BRY"
       },
       {
         "id": "5BAJDNTutBFJL27pKunac1",
@@ -1541,7 +1588,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2011,
         "spotifyId": "6GyFP1nfCDB8lbD2bG0Hq9",
         "spotifyUrl": "https://open.spotify.com/track/6GyFP1nfCDB8lbD2bG0Hq9",
-        "spotifyUri": "spotify:track:6GyFP1nfCDB8lbD2bG0Hq9"
+        "spotifyUri": "spotify:track:6GyFP1nfCDB8lbD2bG0Hq9",
+        "youtubeId": "dX3k_QDnzHE"
       },
       {
         "id": "5VKEsChbUowEF2BT0gJSGX",
@@ -1569,7 +1617,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2014,
         "spotifyId": "2NHkwSwm6C6eAX3z6xm7Uy",
         "spotifyUrl": "https://open.spotify.com/track/2NHkwSwm6C6eAX3z6xm7Uy",
-        "spotifyUri": "spotify:track:2NHkwSwm6C6eAX3z6xm7Uy"
+        "spotifyUri": "spotify:track:2NHkwSwm6C6eAX3z6xm7Uy",
+        "youtubeId": "8GW6sLrK40k"
       }
     ],
     "followersCount": 15087,
@@ -1608,7 +1657,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2007,
         "spotifyId": "5kadOt1O3LrIV46dns9v7u",
         "spotifyUrl": "https://open.spotify.com/track/5kadOt1O3LrIV46dns9v7u",
-        "spotifyUri": "spotify:track:5kadOt1O3LrIV46dns9v7u"
+        "spotifyUri": "spotify:track:5kadOt1O3LrIV46dns9v7u",
+        "youtubeId": "IlEkvbRmfrA"
       },
       {
         "id": "1YGxSgWIWqxKuLLocPVxhC",
@@ -1622,7 +1672,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2023,
         "spotifyId": "1YGxSgWIWqxKuLLocPVxhC",
         "spotifyUrl": "https://open.spotify.com/track/1YGxSgWIWqxKuLLocPVxhC",
-        "spotifyUri": "spotify:track:1YGxSgWIWqxKuLLocPVxhC"
+        "spotifyUri": "spotify:track:1YGxSgWIWqxKuLLocPVxhC",
+        "youtubeId": "9g2s11e1vQc"
       },
       {
         "id": "4Z4i631BesV0P6LTvfLAdL",
@@ -1731,7 +1782,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2014,
         "spotifyId": "2bB6iDVgm25WkYv0yBz1BD",
         "spotifyUrl": "https://open.spotify.com/track/2bB6iDVgm25WkYv0yBz1BD",
-        "spotifyUri": "spotify:track:2bB6iDVgm25WkYv0yBz1BD"
+        "spotifyUri": "spotify:track:2bB6iDVgm25WkYv0yBz1BD",
+        "youtubeId": "zJg5gB3q46E"
       },
       {
         "id": "6XmY3xNVGemozNMApOCobZ",
@@ -1759,7 +1811,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2005,
         "spotifyId": "6eTGxxQxiTFE6LfZHC33Wm",
         "spotifyUrl": "https://open.spotify.com/track/6eTGxxQxiTFE6LfZHC33Wm",
-        "spotifyUri": "spotify:track:6eTGxxQxiTFE6LfZHC33Wm"
+        "spotifyUri": "spotify:track:6eTGxxQxiTFE6LfZHC33Wm",
+        "youtubeId": "mZTb8WxEWl8"
       },
       {
         "id": "2wA8cQwmSw0eVVhOfNRDuZ",
@@ -2097,7 +2150,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 2001,
         "spotifyId": "1uaGSDFsLdReQgg8p7Obwh",
         "spotifyUrl": "https://open.spotify.com/track/1uaGSDFsLdReQgg8p7Obwh",
-        "spotifyUri": "spotify:track:1uaGSDFsLdReQgg8p7Obwh"
+        "spotifyUri": "spotify:track:1uaGSDFsLdReQgg8p7Obwh",
+        "youtubeId": "PeLuQ6X2ixI"
       },
       {
         "id": "5Hf2h59YLInKlic7ooWZVd",
@@ -2111,7 +2165,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 1998,
         "spotifyId": "5Hf2h59YLInKlic7ooWZVd",
         "spotifyUrl": "https://open.spotify.com/track/5Hf2h59YLInKlic7ooWZVd",
-        "spotifyUri": "spotify:track:5Hf2h59YLInKlic7ooWZVd"
+        "spotifyUri": "spotify:track:5Hf2h59YLInKlic7ooWZVd",
+        "youtubeId": "yT0gRc2c2wQ"
       },
       {
         "id": "67Hna13dNDkZvBpTXRIaOJ",
@@ -2125,7 +2180,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 1998,
         "spotifyId": "67Hna13dNDkZvBpTXRIaOJ",
         "spotifyUrl": "https://open.spotify.com/track/67Hna13dNDkZvBpTXRIaOJ",
-        "spotifyUri": "spotify:track:67Hna13dNDkZvBpTXRIaOJ"
+        "spotifyUri": "spotify:track:67Hna13dNDkZvBpTXRIaOJ",
+        "youtubeId": "u7K72X4eo_s"
       },
       {
         "id": "3Ty7OTBNSigGEpeW2PqcsC",
@@ -2139,7 +2195,8 @@ export const SPOTIFY_PLAYLISTS: Playlist[] = [
         "year": 1994,
         "spotifyId": "3Ty7OTBNSigGEpeW2PqcsC",
         "spotifyUrl": "https://open.spotify.com/track/3Ty7OTBNSigGEpeW2PqcsC",
-        "spotifyUri": "spotify:track:3Ty7OTBNSigGEpeW2PqcsC"
+        "spotifyUri": "spotify:track:3Ty7OTBNSigGEpeW2PqcsC",
+        "youtubeId": "4qQyG8KoQ1g"
       },
       {
         "id": "409z4jUHpq7eIkg3N3FzZh",
