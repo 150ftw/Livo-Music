@@ -222,11 +222,32 @@ export function ExpandedPlayer() {
         </div>
 
         {/* Official Spotify Embed Player Component */}
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-lg space-y-3">
           <SpotifyOfficialPlayer track={currentTrack} mode="expanded" />
-          <p className="text-[10px] text-center text-[#8e8c87]/70 font-light mt-2">
-            Tip: Log in to Spotify in this browser to stream full-length songs without 30s preview restrictions.
-          </p>
+
+          {/* Prominent Play Full Song in Spotify Action */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
+            <div className="text-left space-y-0.5">
+              <p className="text-xs font-medium text-[#f5f4f0] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#1DB954]" />
+                Full-Length Playback
+              </p>
+              <p className="text-[11px] text-[#8e8c87]">
+                Stream uninterrupted full track in Spotify app or web
+              </p>
+            </div>
+
+            <a
+              href={`https://open.spotify.com/track/${currentTrack.spotifyId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold text-xs tracking-wide transition-all shadow-[0_0_20px_rgba(29,185,84,0.3)] hover:scale-105 shrink-0 cursor-pointer"
+              title="Play full song in Spotify"
+            >
+              <span>Play in Spotify</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </main>
 

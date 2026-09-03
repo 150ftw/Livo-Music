@@ -12,6 +12,7 @@ export interface Track {
   spotifyId: string;
   spotifyUrl: string;
   spotifyUri: string;
+  youtubeId?: string;
 }
 
 export type PlaylistCategory =
