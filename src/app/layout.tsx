@@ -4,6 +4,7 @@ import "./globals.css";
 import { SpotifyAuthProvider } from "@/context/SpotifyAuthContext";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { SearchOverlayProvider } from "@/context/SearchOverlayContext";
+import { Sidebar } from "@/components/navigation/Sidebar";
 import { LivoNav } from "@/components/navigation/LivoNav";
 import { FloatingPlayer } from "@/components/player/FloatingPlayer";
 import { ExpandedPlayer } from "@/components/player/ExpandedPlayer";
@@ -33,30 +34,36 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} dark antialiased`} suppressHydrationWarning>
       <body
-        className="min-h-screen w-full bg-[#050505] text-[#f5f4f0] font-sans overflow-x-hidden selection:bg-white/20"
+        className="min-h-screen w-full bg-[#000] text-white font-sans overflow-x-hidden selection:bg-[#1ed760]/30"
         suppressHydrationWarning
       >
         <SpotifyAuthProvider>
           <PlayerProvider>
             <SearchOverlayProvider>
-              {/* Minimal Header Navigation */}
-              <LivoNav />
+              {/* Persistent Left Sidebar (Desktop) */}
+              <Sidebar />
 
-              {/* Expansive Canvas Main Body */}
-              <main className="min-h-[calc(100vh-4rem)] pb-32">
-                {children}
-              </main>
+              {/* Main Content Area — offset by sidebar on desktop */}
+              <div className="md:ml-[var(--sidebar-width)] min-h-screen flex flex-col bg-[#121212]">
+                {/* Slim Top Bar */}
+                <LivoNav />
 
-              {/* Persistent Floating Minimal Player */}
+                {/* Scrollable Content Canvas */}
+                <main className="flex-1 pb-32 rounded-t-xl overflow-hidden">
+                  {children}
+                </main>
+              </div>
+
+              {/* Persistent Floating Player */}
               <FloatingPlayer />
 
               {/* Expanded Full-Screen Listening Environment */}
               <ExpandedPlayer />
 
-              {/* Full-Screen Minimalist Search Overlay */}
+              {/* Full-Screen Search Overlay */}
               <SearchOverlay />
 
-              {/* Full-Length Uninterrupted Audio Engine */}
+              {/* Full-Length Audio Engine */}
               <FullAudioEngine />
             </SearchOverlayProvider>
           </PlayerProvider>

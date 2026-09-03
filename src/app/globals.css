@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #f5f4f0;
-  --surface-1: #080808;
-  --surface-2: #0c0c0c;
-  --surface-3: #121212;
-  --surface-border: rgba(255, 255, 255, 0.06);
+  --background: #121212;
+  --background-elevated: #181818;
+  --background-highlight: #1a1a1a;
+  --background-press: #000;
+  --foreground: #fff;
+  --surface-1: #181818;
+  --surface-2: #242424;
+  --surface-3: #2a2a2a;
+  --surface-border: rgba(255, 255, 255, 0.07);
   --surface-border-hover: rgba(255, 255, 255, 0.14);
-  --text-primary: #f5f4f0;
-  --text-secondary: #8e8c87;
-  --text-tertiary: #4a4844;
-  --light-line: rgba(245, 240, 225, 0.07);
+  --text-primary: #fff;
+  --text-secondary: #b3b3b3;
+  --text-tertiary: #6a6a6a;
+  --accent-green: #1ed760;
+  --accent-green-hover: #1fdf64;
+  --sidebar-width: 280px;
+  --topbar-height: 64px;
+  --player-height: 72px;
 }
 
 * {
@@ -20,23 +27,24 @@
 
 html {
   color-scheme: dark;
-  background-color: #050505;
-  color: #f5f4f0;
+  background-color: var(--background);
+  color: var(--foreground);
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #050505;
-  color: #f5f4f0;
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-/* Livo Quiet Custom Scrollbar */
+/* Custom Scrollbar — thin, fading, modern */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -44,15 +52,52 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.24);
 }
 
-/* Faint horizontal light line animation (subtle reflected light) */
+/* Horizontal scroll container — hide scrollbar, snap */
+.scroll-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 8px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Card hover play button animation */
+@keyframes card-play-pop {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.card-play-enter {
+  animation: card-play-pop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Faint horizontal light line animation */
 @keyframes light-sweep {
   0% {
     transform: translateX(-100%) scaleX(0.7);
@@ -76,7 +121,8 @@ body {
 
 /* Subtle breathing animation for playing artwork */
 @keyframes artwork-breathe {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
   }
@@ -92,7 +138,8 @@ body {
 
 /* Faint ambient pulse */
 @keyframes ambient-glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.35;
     transform: scale(1);
   }
@@ -104,6 +151,18 @@ body {
 
 .animate-ambient-glow {
   animation: ambient-glow-pulse 10s ease-in-out infinite;
+}
+
+/* Sidebar & layout transitions */
+.sidebar-transition {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradient fade edges for scroll rows */
+.scroll-fade-right {
+  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }
 
 /* Reduced motion support */
