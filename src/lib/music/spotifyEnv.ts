@@ -1,26 +1,25 @@
 import fs from "fs";
 import path from "path";
+import { NextRequest } from "next/server";
+
+// Fallback credentials configured for this project
+const FALLBACK_CLIENT_ID = "661e288ab25141c28ccc0a4a18b8f68f";
+const FALLBACK_CLIENT_SECRET = "7059e895f2084ad1aebfcd879aac83da";
 
 /**
  * Robust environment variable resolver for Spotify credentials.
- * Checks process.env first, and gracefully falls back to reading .env.local
- * from disk across multiple potential workspace paths.
+ * Works seamlessly across both local development and Vercel cloud deployments.
  */
-export function getSpotifyEnv() {
+export function getSpotifyEnv(request?: NextRequest) {
   let clientId = (process.env.SPOTIFY_CLIENT_ID || "").trim();
   let clientSecret = (process.env.SPOTIFY_CLIENT_SECRET || "").trim();
-  let redirectUri = (
-    process.env.SPOTIFY_REDIRECT_URI ||
-    "http://localhost:3000/api/auth/spotify/callback"
-  ).trim();
 
-  if (!clientId || !clientSecret) {
+  // In local development, check .env.local on disk if missing from memory
+  if ((!clientId || !clientSecret) && process.env.NODE_ENV !== "production") {
     const candidatePaths = [
       path.join(process.cwd(), ".env.local"),
       path.join(process.cwd(), ".env"),
       path.resolve(".env.local"),
-      "F:\\New Website Idea for Music\\.env.local",
-      "F:/New Website Idea for Music/.env.local",
     ];
 
     for (const envPath of candidatePaths) {
@@ -41,22 +40,41 @@ export function getSpotifyEnv() {
               if (key === "SPOTIFY_CLIENT_SECRET" && !clientSecret) {
                 clientSecret = val;
               }
-              if (key === "SPOTIFY_REDIRECT_URI" && !process.env.SPOTIFY_REDIRECT_URI) {
-                redirectUri = val;
-              }
             }
           }
           if (clientId && clientSecret) break;
         }
-      } catch (err) {
-        console.error(`Error reading ${envPath}:`, err);
-      }
+      } catch {}
     }
   }
+
+  // Fall back to configured project credentials for Vercel deployment
+  if (!clientId) {
+    clientId = FALLBACK_CLIENT_ID;
+  }
+  if (!clientSecret) {
+    clientSecret = FALLBACK_CLIENT_SECRET;
+  }
+
+  // Dynamically resolve Redirect URI based on runtime environment (Vercel vs Local)
+  let origin = "https://livo-music.vercel.app";
+  if (request) {
+    origin = request.nextUrl.origin;
+  } else if (process.env.NEXT_PUBLIC_APP_URL) {
+    origin = process.env.NEXT_PUBLIC_APP_URL;
+  } else if (process.env.VERCEL_URL) {
+    origin = `https://${process.env.VERCEL_URL}`;
+  } else if (process.env.NODE_ENV === "development") {
+    origin = "http://localhost:3000";
+  }
+
+  const redirectUri =
+    process.env.SPOTIFY_REDIRECT_URI || `${origin}/api/auth/spotify/callback`;
 
   return {
     clientId,
     clientSecret,
     redirectUri,
+    origin,
   };
 }

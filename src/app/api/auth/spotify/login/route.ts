@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { getSpotifyEnv } from "@/lib/music/spotifyEnv";
 
 export async function GET(request: NextRequest) {
-  const { clientId, redirectUri } = getSpotifyEnv();
+  const { clientId, redirectUri } = getSpotifyEnv(request);
 
   if (!clientId) {
     return NextResponse.json(

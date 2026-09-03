@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}?auth_error=state_mismatch`);
   }
 
-  const { clientId, clientSecret, redirectUri } = getSpotifyEnv();
+  const { clientId, clientSecret, redirectUri } = getSpotifyEnv(request);
 
   if (!clientId || !clientSecret) {
     return NextResponse.redirect(`${origin}?auth_error=missing_credentials`);
