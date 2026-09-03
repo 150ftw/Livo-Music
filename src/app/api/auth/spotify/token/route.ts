@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSpotifyEnv } from "@/lib/music/spotifyEnv";
 
 export async function GET(request: NextRequest) {
   let userToken = request.cookies.get("spotify_user_token")?.value;
@@ -13,8 +14,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Refresh the token
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const { clientId, clientSecret } = getSpotifyEnv();
 
   if (!clientId || !clientSecret) {
     return NextResponse.json({ error: "Missing credentials" }, { status: 500 });

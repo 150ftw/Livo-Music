@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { getSpotifyEnv } from "@/lib/music/spotifyEnv";
 
 export async function GET(request: NextRequest) {
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const redirectUri =
-    process.env.SPOTIFY_REDIRECT_URI || "http://localhost:3000/api/auth/spotify/callback";
+  const { clientId, redirectUri } = getSpotifyEnv();
 
   if (!clientId) {
     return NextResponse.json(
-      { error: "Missing SPOTIFY_CLIENT_ID in environment" },
+      { error: "Missing SPOTIFY_CLIENT_ID in .env.local or environment" },
       { status: 500 }
     );
   }

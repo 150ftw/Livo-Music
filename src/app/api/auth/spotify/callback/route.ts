@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSpotifyEnv } from "@/lib/music/spotifyEnv";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -19,10 +20,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}?auth_error=state_mismatch`);
   }
 
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-  const redirectUri =
-    process.env.SPOTIFY_REDIRECT_URI || "http://localhost:3000/api/auth/spotify/callback";
+  const { clientId, clientSecret, redirectUri } = getSpotifyEnv();
 
   if (!clientId || !clientSecret) {
     return NextResponse.redirect(`${origin}?auth_error=missing_credentials`);
