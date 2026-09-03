@@ -8,6 +8,7 @@ import { LivoNav } from "@/components/navigation/LivoNav";
 import { FloatingPlayer } from "@/components/player/FloatingPlayer";
 import { ExpandedPlayer } from "@/components/player/ExpandedPlayer";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
+import { FullAudioEngine } from "@/components/player/FullAudioEngine";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -51,6 +52,9 @@ export default function RootLayout({
 
               {/* Full-Screen Minimalist Search Overlay */}
               <SearchOverlay />
+
+              {/* Full-Length Uninterrupted Audio Engine */}
+              <FullAudioEngine />
             </SearchOverlayProvider>
           </PlayerProvider>
         </SpotifyAuthProvider>

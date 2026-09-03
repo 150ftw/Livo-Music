@@ -57,6 +57,8 @@ interface PlayerContextType {
   isRepeat: boolean;
   isTrackSaved: (trackId: string) => boolean;
   closePlayer: () => void;
+  setProgress: (time: number) => void;
+  setDuration: (time: number) => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -272,6 +274,12 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
 
       if (audioRef.current && currentTrack?.audioUrl) {
         audioRef.current.currentTime = clamped;
+      }
+
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("livo:seek", { detail: { time: clamped } })
+        );
       }
     },
     [duration, currentTrack]
@@ -546,6 +554,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
         isRepeat: repeatMode !== "off",
         isTrackSaved: isSavedTrack,
         closePlayer,
+        setProgress,
+        setDuration,
       }}
     >
       {children}
