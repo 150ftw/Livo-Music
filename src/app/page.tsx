@@ -13,60 +13,61 @@ import { formatTime } from "@/lib/utils";
 import { Play, Pause } from "lucide-react";
 import { HorizontalScroll } from "@/components/ui/HorizontalScroll";
 import { MusicCard } from "@/components/ui/MusicCard";
+import { Ferrofluid } from "@/components/ui/Ferrofluid";
 
 export default function HomePage() {
-  const { playTrack, currentTrack, isPlaying, togglePlay } = usePlayer();
+  const { playTrack, currentTrack, isPlaying, togglePlay, progress } = usePlayer();
 
   // Hero: first playlist
   const heroPlaylist = SPOTIFY_PLAYLISTS[0];
   const heroTrack = heroPlaylist.tracks[0];
   const isHeroPlaying = isPlaying && currentTrack?.id === heroTrack.id;
 
-  // Quick-pick grid: first 6 playlists/tracks as compact cards
+  // Quick-pick grid: all 6 user playlists as compact cards
   const quickPicks = SPOTIFY_PLAYLISTS.slice(0, 6);
 
-  // Trending songs: diverse selection
+  // Trending songs: diverse selection across all 6 user playlists
   const trending = [
-    SPOTIFY_TRACKS[0],
-    SPOTIFY_TRACKS[5],
-    SPOTIFY_TRACKS[9],
-    SPOTIFY_TRACKS[13],
-    SPOTIFY_TRACKS[17],
-    SPOTIFY_TRACKS[2],
-    SPOTIFY_TRACKS[24],
-    SPOTIFY_TRACKS[28],
-    SPOTIFY_TRACKS[35],
-    SPOTIFY_TRACKS[41],
+    SPOTIFY_PLAYLISTS[0]?.tracks[0], // Punjabi HardLaunch
+    SPOTIFY_PLAYLISTS[1]?.tracks[0], // Underrated Indie
+    SPOTIFY_PLAYLISTS[2]?.tracks[0], // Punjabi OG's
+    SPOTIFY_PLAYLISTS[3]?.tracks[0], // Hollywood Rap
+    SPOTIFY_PLAYLISTS[4]?.tracks[0], // guitar covers 2024
+    SPOTIFY_PLAYLISTS[5]?.tracks[0], // Favourite
+    SPOTIFY_PLAYLISTS[0]?.tracks[2],
+    SPOTIFY_PLAYLISTS[1]?.tracks[1],
+    SPOTIFY_PLAYLISTS[3]?.tracks[1],
+    SPOTIFY_PLAYLISTS[5]?.tracks[1],
   ].filter(Boolean);
 
-  // Curated atmospheres
-  const atmospheres = SPOTIFY_PLAYLISTS.slice(0, 8);
+  // Curated atmospheres (all 6 user playlists)
+  const atmospheres = SPOTIFY_PLAYLISTS;
 
-  // Artists
+  // Artists from the playlists
   const artists = SPOTIFY_ARTISTS || [];
 
-  // Popular albums (use tracks but display as album cards)
+  // Popular album cards
   const popularAlbums = [
-    SPOTIFY_TRACKS[0],
-    SPOTIFY_TRACKS[3],
-    SPOTIFY_TRACKS[6],
-    SPOTIFY_TRACKS[12],
-    SPOTIFY_TRACKS[18],
-    SPOTIFY_TRACKS[24],
-    SPOTIFY_TRACKS[30],
-    SPOTIFY_TRACKS[36],
+    SPOTIFY_PLAYLISTS[0]?.tracks[1],
+    SPOTIFY_PLAYLISTS[1]?.tracks[2],
+    SPOTIFY_PLAYLISTS[2]?.tracks[1],
+    SPOTIFY_PLAYLISTS[3]?.tracks[2],
+    SPOTIFY_PLAYLISTS[4]?.tracks[1],
+    SPOTIFY_PLAYLISTS[5]?.tracks[2],
+    SPOTIFY_PLAYLISTS[0]?.tracks[3],
+    SPOTIFY_PLAYLISTS[1]?.tracks[3],
   ].filter(Boolean);
 
-  // Tonight's tracklist
+  // Tonight's nocturnal selections
   const tonightsSelections = [
-    SPOTIFY_TRACKS[0],
-    SPOTIFY_TRACKS[5],
-    SPOTIFY_TRACKS[17] || SPOTIFY_TRACKS[1],
-    SPOTIFY_TRACKS[9] || SPOTIFY_TRACKS[2],
-    SPOTIFY_TRACKS[2],
-    SPOTIFY_TRACKS[13] || SPOTIFY_TRACKS[3],
-    SPOTIFY_TRACKS[24] || SPOTIFY_TRACKS[4],
-    SPOTIFY_TRACKS[28] || SPOTIFY_TRACKS[5],
+    SPOTIFY_PLAYLISTS[5]?.tracks[0], // Favourite
+    SPOTIFY_PLAYLISTS[1]?.tracks[0], // Underrated Indie
+    SPOTIFY_PLAYLISTS[4]?.tracks[0], // Guitar covers
+    SPOTIFY_PLAYLISTS[0]?.tracks[0], // Punjabi HardLaunch
+    SPOTIFY_PLAYLISTS[3]?.tracks[0], // Hollywood Rap
+    SPOTIFY_PLAYLISTS[2]?.tracks[0], // Punjabi OG's
+    SPOTIFY_PLAYLISTS[1]?.tracks[4],
+    SPOTIFY_PLAYLISTS[5]?.tracks[3],
   ].filter(Boolean);
 
   const handleHeroPlay = () => {
@@ -89,8 +90,34 @@ export default function HomePage() {
     <div className="w-full space-y-8 sm:space-y-10 pb-8 select-none">
       {/* 1. GREETING + HERO BANNER */}
       <section className="relative">
-        {/* Gradient Background */}
-        <div className="absolute inset-0 h-[340px] bg-gradient-to-b from-[#1a3a2a] via-[#1a3a2a]/40 to-transparent pointer-events-none rounded-t-xl" />
+        {/* Living Ferrofluid Soundscape Hero Background */}
+        <div className="absolute inset-0 h-[360px] pointer-events-none overflow-hidden rounded-t-xl z-0">
+          <Ferrofluid
+            colors={
+              currentTrack?.accentColor
+                ? [currentTrack.accentColor, "#15803d", "#737373"]
+                : ["#15803d", "#22c55e", "#737373"]
+            }
+            speed={0.16}
+            scale={1.85}
+            turbulence={0.45}
+            fluidity={0.16}
+            rimWidth={0.18}
+            sharpness={2.0}
+            shimmer={0.3}
+            glow={1.15}
+            flowDirection="down"
+            opacity={0.22}
+            mouseInteraction={true}
+            mouseStrength={0.6}
+            syncToBeats={true}
+            isPlaying={isPlaying}
+            track={currentTrack}
+            currentTime={progress}
+            mixBlendMode="screen"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a2a]/20 via-[#121212]/75 to-[#121212]" />
+        </div>
 
         <div className="relative px-6 lg:px-8 pt-6 pb-2">
           <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-6">

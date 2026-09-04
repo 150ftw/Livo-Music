@@ -12,42 +12,35 @@ export default function DiscoverPage() {
   const { playTrack, currentTrack, isPlaying, togglePlay } = usePlayer();
 
   // Section 1: Hero Featured Record
-  const featured = SPOTIFY_PLAYLISTS[1]; // Golden Hour
-  const isFeaturedPlaying = isPlaying && currentTrack?.id === featured.tracks[0].id;
+  const featured = SPOTIFY_PLAYLISTS[1] || SPOTIFY_PLAYLISTS[0]; // Underrated Indie songs
+  const isFeaturedPlaying = isPlaying && currentTrack?.id === featured?.tracks[0]?.id;
 
-  // Section 2: 6 Curated Atmospheres
-  const atmospheres = [
-    SPOTIFY_PLAYLISTS[0], // Late Night Frequencies
-    SPOTIFY_PLAYLISTS[1], // Golden Hour
-    SPOTIFY_PLAYLISTS[2], // After Hours
-    SPOTIFY_PLAYLISTS[3], // Deep Focus
-    SPOTIFY_PLAYLISTS[4], // Sunday Morning
-    SPOTIFY_PLAYLISTS[5], // Night Drive
-  ];
+  // Section 2: All 6 Curated Atmospheres
+  const atmospheres = SPOTIFY_PLAYLISTS;
 
   // Section 3: Recently Added Tracks
   const recentlyAdded = [
-    SPOTIFY_TRACKS[35] || SPOTIFY_TRACKS[0],
-    SPOTIFY_TRACKS[41] || SPOTIFY_TRACKS[1],
-    SPOTIFY_TRACKS[42] || SPOTIFY_TRACKS[2],
-    SPOTIFY_TRACKS[43] || SPOTIFY_TRACKS[3],
-    SPOTIFY_TRACKS[50] || SPOTIFY_TRACKS[4],
-    SPOTIFY_TRACKS[47] || SPOTIFY_TRACKS[5],
+    SPOTIFY_PLAYLISTS[0]?.tracks[0], // Punjabi HardLaunch
+    SPOTIFY_PLAYLISTS[1]?.tracks[0], // Underrated Indie
+    SPOTIFY_PLAYLISTS[2]?.tracks[0], // Punjabi OG's
+    SPOTIFY_PLAYLISTS[3]?.tracks[0], // Hollywood Rap
+    SPOTIFY_PLAYLISTS[4]?.tracks[0], // guitar covers 2024
+    SPOTIFY_PLAYLISTS[5]?.tracks[0], // Favourite
   ].filter(Boolean);
 
   // Section 4: Hidden Gems
   const hiddenGems = [
     {
-      track: SPOTIFY_TRACKS[24] || SPOTIFY_TRACKS[0],
-      curatorNote: "Intricate micro-percussion blended with acoustic dulcimer strings.",
+      track: SPOTIFY_PLAYLISTS[1]?.tracks[0], // Ho Jayenge Ghum by Raghav & Arjun, Taba Chake
+      curatorNote: "Soulful acoustic guitar fingerstyle and bilingual indie storytelling from Arunachal Pradesh.",
     },
     {
-      track: SPOTIFY_TRACKS[25] || SPOTIFY_TRACKS[1],
-      curatorNote: "Distorted Buchla modular synthesizer arpeggios pushing spatial dynamics.",
+      track: SPOTIFY_PLAYLISTS[4]?.tracks[0], // it will rain - guitar version by guitar girl
+      curatorNote: "Intimate solo acoustic guitar cover with warm room acoustics and unhurried resonance.",
     },
     {
-      track: SPOTIFY_TRACKS[26] || SPOTIFY_TRACKS[2],
-      curatorNote: "Downtempo nostalgia meeting sunlit psych-funk rhythms.",
+      track: SPOTIFY_PLAYLISTS[5]?.tracks[0], // John Wayne by Cigarettes After Sex
+      curatorNote: "Nocturnal slowcore drenched in reverb, warm tape hiss, and whispery romantic vocals.",
     },
   ].filter((g) => Boolean(g.track));
 
@@ -126,11 +119,7 @@ export default function DiscoverPage() {
             </div>
 
             <p className="text-sm text-[#8e8c87] font-light leading-relaxed">
-              &ldquo;Recorded between the quiet hours of sundown and dusk, Golden
-              Hour captures the fragile acoustic warmth of vintage guitars and
-              unhurried vocal harmonies. In a landscape dominated by hyper-compressed
-              digital mastering, these analog recordings preserve the physical
-              breathing room of the original studio space.&rdquo;
+              &ldquo;{featured.description}&rdquo;
             </p>
 
             <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between">

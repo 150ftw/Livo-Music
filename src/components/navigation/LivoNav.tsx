@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSearchOverlay } from "@/context/SearchOverlayContext";
-import { useSpotifyAuth } from "@/context/SpotifyAuthContext";
 import {
   Search,
   Compass,
@@ -18,7 +17,6 @@ import {
 export function LivoNav() {
   const pathname = usePathname();
   const { openSearch } = useSearchOverlay();
-  const { user, isAuthenticated, login, logout } = useSpotifyAuth();
 
   return (
     <>
@@ -59,29 +57,21 @@ export function LivoNav() {
             </button>
           </div>
 
-          {/* Right: Account / Connect */}
+          {/* Right: User / Profile */}
           <div className="flex items-center gap-3">
-            {isAuthenticated ? (
-              <div className="flex items-center gap-3">
-                <button className="w-8 h-8 rounded-full bg-[#242424] hover:bg-[#2a2a2a] flex items-center justify-center text-[#b3b3b3] hover:text-white transition-colors cursor-pointer">
-                  <Bell className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => logout()}
-                  className="w-8 h-8 rounded-full bg-[#242424] hover:bg-[#2a2a2a] overflow-hidden flex items-center justify-center text-white text-xs font-bold transition-colors cursor-pointer"
-                  title={user?.display_name || "Account"}
-                >
-                  {user?.display_name?.[0]?.toUpperCase() || "U"}
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={login}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-sm font-bold hover:scale-105 transition-all cursor-pointer"
-              >
-                <span>Connect</span>
-              </button>
-            )}
+            <button
+              className="w-8 h-8 rounded-full bg-[#242424] hover:bg-[#2a2a2a] flex items-center justify-center text-[#b3b3b3] hover:text-white transition-colors cursor-pointer"
+              title="Notifications"
+              aria-label="Notifications"
+            >
+              <Bell className="w-4 h-4" />
+            </button>
+            <div
+              className="w-8 h-8 rounded-full bg-[#242424] border border-white/10 flex items-center justify-center text-white text-xs font-semibold cursor-default"
+              title="LIVO Listener"
+            >
+              L
+            </div>
           </div>
         </div>
       </header>

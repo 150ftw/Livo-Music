@@ -170,7 +170,7 @@ export function Sidebar() {
       {/* Bottom Attribution */}
       <div className="px-6 py-4 border-t border-white/[0.06]">
         <p className="text-[10px] text-[#6a6a6a] leading-relaxed">
-          Powered by Spotify · LIVO © 2024
+          LIVO Sound Architecture © 2024
         </p>
       </div>
     </aside>

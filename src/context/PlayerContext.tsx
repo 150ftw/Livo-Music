@@ -9,6 +9,7 @@ import React, {
   useCallback,
 } from "react";
 import { Track, Playlist, RepeatMode } from "@/types/music";
+import { SPOTIFY_TRACKS } from "@/lib/music/spotifyCatalog";
 
 interface PlayerContextType {
   currentTrack: Track | null;
@@ -82,8 +83,40 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [queue, setQueue] = useState<Track[]>([]);
   const [queueIndex, setQueueIndex] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
-  const [repeatMode, setRepeatMode] = useState<RepeatMode>("off");
+  const [repeatMode, setRepeatMode] = useState<RepeatMode>("all");
   const [isFullScreen, setIsFullScreen] = useState(false);
+
+  // State refs to eliminate any stale closure issues during track transition
+  const queueRef = useRef<Track[]>(queue);
+  const queueIndexRef = useRef<number>(queueIndex);
+  const isShuffleRef = useRef<boolean>(isShuffle);
+  const repeatModeRef = useRef<RepeatMode>(repeatMode);
+  const currentTrackRef = useRef<Track | null>(currentTrack);
+  const progressRef = useRef<number>(progress);
+
+  useEffect(() => {
+    queueRef.current = queue;
+  }, [queue]);
+
+  useEffect(() => {
+    queueIndexRef.current = queueIndex;
+  }, [queueIndex]);
+
+  useEffect(() => {
+    isShuffleRef.current = isShuffle;
+  }, [isShuffle]);
+
+  useEffect(() => {
+    repeatModeRef.current = repeatMode;
+  }, [repeatMode]);
+
+  useEffect(() => {
+    currentTrackRef.current = currentTrack;
+  }, [currentTrack]);
+
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   // Persistence with lazy state initializers
   const [savedTracks, setSavedTracks] = useState<Track[]>(() => {
@@ -123,9 +156,9 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     if (typeof window === "undefined") return;
 
     const audio = new Audio();
+    audioRef.current = audio;
     audio.preload = "auto";
     audio.volume = isMuted ? 0 : volume;
-    audioRef.current = audio;
 
     const handleTimeUpdate = () => {
       setProgress(audio.currentTime);
@@ -153,6 +186,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       audio.src = "";
     };
   }, []);
+
 
   // Update volume on existing audio element without re-creating it
   useEffect(() => {
@@ -219,8 +253,10 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   // Direct track play implementation (provider-agnostic)
   const playTrackDirect = useCallback(
     (track: Track) => {
+      currentTrackRef.current = track;
       setCurrentTrack(track);
       setProgress(0);
+      progressRef.current = 0;
       setDuration(track.duration || 180);
       setIsPlaying(true);
 
@@ -271,6 +307,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     (time: number) => {
       const clamped = Math.max(0, Math.min(duration, time));
       setProgress(clamped);
+      progressRef.current = clamped;
 
       if (audioRef.current && currentTrack?.audioUrl) {
         audioRef.current.currentTime = clamped;
@@ -285,23 +322,40 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     [duration, currentTrack]
   );
 
-  // Next track implementation
+  // Next track implementation - auto advances cleanly with zero stale closures
   const nextTrack = useCallback(() => {
-    if (queue.length === 0) return;
+    const curQueue = queueRef.current;
+    const curIdx = queueIndexRef.current;
+    const curRepeat = repeatModeRef.current;
+    const curShuffle = isShuffleRef.current;
+    const curTrack = currentTrackRef.current;
 
-    if (repeatMode === "one" && currentTrack) {
+    // Handle repeat mode "one"
+    if (curRepeat === "one" && curTrack) {
       seekTo(0);
       resume();
       return;
     }
 
+    // Determine working active queue (current queue or catalog fallback)
+    const activeQueue = curQueue.length > 0 ? curQueue : SPOTIFY_TRACKS;
+    if (activeQueue.length === 0) return;
+
     let nextIdx: number;
-    if (isShuffle) {
-      nextIdx = Math.floor(Math.random() * queue.length);
+    if (curShuffle) {
+      nextIdx = Math.floor(Math.random() * activeQueue.length);
     } else {
-      nextIdx = queueIndex + 1;
-      if (nextIdx >= queue.length) {
-        if (repeatMode === "all") {
+      // Accurately locate current track index
+      const currentTrackIndex =
+        curIdx >= 0 && curIdx < activeQueue.length && activeQueue[curIdx]?.id === curTrack?.id
+          ? curIdx
+          : activeQueue.findIndex((t) => t.id === curTrack?.id);
+
+      const baseIdx = currentTrackIndex !== -1 ? currentTrackIndex : curIdx;
+      nextIdx = baseIdx + 1;
+
+      if (nextIdx >= activeQueue.length) {
+        if (curRepeat === "all") {
           nextIdx = 0;
         } else {
           setIsPlaying(false);
@@ -310,32 +364,55 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    const target = queue[nextIdx];
+    const target = activeQueue[nextIdx];
     if (target) {
+      if (curQueue.length === 0) {
+        setQueue(activeQueue);
+        queueRef.current = activeQueue;
+      }
       setQueueIndex(nextIdx);
+      queueIndexRef.current = nextIdx;
       playTrackDirect(target);
     }
-  }, [queue, queueIndex, isShuffle, repeatMode, currentTrack, seekTo, resume, playTrackDirect]);
+  }, [seekTo, resume, playTrackDirect]);
 
   // Previous track implementation
   const prevTrack = useCallback(() => {
-    if (queue.length === 0) return;
+    const curQueue = queueRef.current;
+    const curIdx = queueIndexRef.current;
+    const curProgress = progressRef.current;
+    const curTrack = currentTrackRef.current;
 
-    if (progress > 3) {
+    const activeQueue = curQueue.length > 0 ? curQueue : SPOTIFY_TRACKS;
+    if (activeQueue.length === 0) return;
+
+    if (curProgress > 3) {
       seekTo(0);
       return;
     }
 
-    const prevIdx = queueIndex - 1;
+    const currentTrackIndex =
+      curIdx >= 0 && curIdx < activeQueue.length && activeQueue[curIdx]?.id === curTrack?.id
+        ? curIdx
+        : activeQueue.findIndex((t) => t.id === curTrack?.id);
+
+    const baseIdx = currentTrackIndex !== -1 ? currentTrackIndex : curIdx;
+    let prevIdx = baseIdx - 1;
     if (prevIdx < 0) {
-      const targetIdx = queue.length - 1;
-      setQueueIndex(targetIdx);
-      playTrackDirect(queue[targetIdx]);
-    } else {
-      setQueueIndex(prevIdx);
-      playTrackDirect(queue[prevIdx]);
+      prevIdx = activeQueue.length - 1;
     }
-  }, [queue, queueIndex, progress, seekTo, playTrackDirect]);
+
+    const target = activeQueue[prevIdx];
+    if (target) {
+      if (curQueue.length === 0) {
+        setQueue(activeQueue);
+        queueRef.current = activeQueue;
+      }
+      setQueueIndex(prevIdx);
+      queueIndexRef.current = prevIdx;
+      playTrackDirect(target);
+    }
+  }, [seekTo, playTrackDirect]);
 
   // Listen for audio track completion to advance queue
   useEffect(() => {
@@ -351,14 +428,25 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     (track: Track, newQueue?: Track[]) => {
       if (newQueue && newQueue.length > 0) {
         setQueue(newQueue);
+        queueRef.current = newQueue;
         const idx = newQueue.findIndex((t) => t.id === track.id);
-        setQueueIndex(idx !== -1 ? idx : 0);
+        const targetIdx = idx !== -1 ? idx : 0;
+        setQueueIndex(targetIdx);
+        queueIndexRef.current = targetIdx;
       } else {
         setQueue((prev) => {
-          if (!prev.some((t) => t.id === track.id)) {
-            return [...prev, track];
+          const idx = prev.findIndex((t) => t.id === track.id);
+          if (idx !== -1) {
+            setQueueIndex(idx);
+            queueIndexRef.current = idx;
+            return prev;
           }
-          return prev;
+          const updated = [...prev, track];
+          const newIdx = updated.length - 1;
+          setQueueIndex(newIdx);
+          queueIndexRef.current = newIdx;
+          queueRef.current = updated;
+          return updated;
         });
       }
       playTrackDirect(track);
@@ -370,9 +458,11 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const playPlaylist = useCallback(
     (playlist: Playlist, startIndex = 0) => {
       if (!playlist.tracks || playlist.tracks.length === 0) return;
-      setQueue(playlist.tracks);
       const safeIdx = Math.min(Math.max(0, startIndex), playlist.tracks.length - 1);
+      setQueue(playlist.tracks);
+      queueRef.current = playlist.tracks;
       setQueueIndex(safeIdx);
+      queueIndexRef.current = safeIdx;
       playTrackDirect(playlist.tracks[safeIdx]);
     },
     [playTrackDirect]

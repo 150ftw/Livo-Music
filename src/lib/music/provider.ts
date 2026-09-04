@@ -73,9 +73,7 @@ export class LivoMusicProvider implements MusicProvider {
   }
 
   async getFeaturedPlaylists(): Promise<Playlist[]> {
-    return SPOTIFY_PLAYLISTS.filter(
-      (p) => p.category === "featured" || p.id === "late-night-frequencies" || p.id === "golden-hour"
-    );
+    return SPOTIFY_PLAYLISTS.slice(0, 3);
   }
 
   async getTrending(): Promise<Playlist[]> {

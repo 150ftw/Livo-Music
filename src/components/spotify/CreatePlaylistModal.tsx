@@ -39,7 +39,7 @@ export function CreatePlaylistModal({ isOpen, onClose }: CreatePlaylistModalProp
       releaseDate: "Just now",
       tags: ["My Playlist", "Custom"],
       spotifyId: "",
-      spotifyUrl: "https://open.spotify.com",
+      spotifyUrl: "",
       spotifyUri: "",
     };
 

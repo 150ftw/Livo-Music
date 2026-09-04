@@ -25,6 +25,22 @@ export function FullAudioEngine() {
   const isReadyRef = useRef(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentTrackIdRef = useRef<string | null>(null);
+  const hasTriggeredEndedRef = useRef(false);
+
+  // Keep nextTrack ref updated to eliminate stale closure bugs inside YouTube callbacks
+  const nextTrackRef = useRef(nextTrack);
+  useEffect(() => {
+    nextTrackRef.current = nextTrack;
+  }, [nextTrack]);
+
+  const triggerTrackEnded = () => {
+    if (hasTriggeredEndedRef.current) return;
+    hasTriggeredEndedRef.current = true;
+    console.log("[FullAudioEngine] Track completed. Auto-playing next track.");
+    if (nextTrackRef.current) {
+      nextTrackRef.current();
+    }
+  };
 
   // Initialize YouTube IFrame API outside React virtual DOM tree
   useEffect(() => {
@@ -36,12 +52,13 @@ export function FullAudioEngine() {
       container = document.createElement("div");
       container.id = "livo-yt-isolated-container";
       container.style.position = "fixed";
-      container.style.top = "-9999px";
-      container.style.left = "-9999px";
-      container.style.width = "1px";
-      container.style.height = "1px";
-      container.style.opacity = "0";
+      container.style.bottom = "0px";
+      container.style.right = "0px";
+      container.style.width = "200px";
+      container.style.height = "200px";
+      container.style.opacity = "0.001";
       container.style.pointerEvents = "none";
+      container.style.zIndex = "-9999";
       document.body.appendChild(container);
 
       const targetDiv = document.createElement("div");
@@ -61,8 +78,8 @@ export function FullAudioEngine() {
       if (!document.getElementById("livo-yt-mount-point")) return;
 
       playerRef.current = new window.YT.Player("livo-yt-mount-point", {
-        height: "1",
-        width: "1",
+        height: "200",
+        width: "200",
         playerVars: {
           autoplay: 1,
           controls: 0,
@@ -76,6 +93,7 @@ export function FullAudioEngine() {
           onReady: (e: any) => {
             isReadyRef.current = true;
             try {
+              e.target.unMute();
               e.target.setVolume(isMuted ? 0 : volume * 100);
             } catch {}
             if (currentTrack) {
@@ -85,8 +103,15 @@ export function FullAudioEngine() {
           onStateChange: (e: any) => {
             // YT.PlayerState.ENDED is 0
             if (e.data === 0) {
-              nextTrack();
+              triggerTrackEnded();
             }
+          },
+          onError: (e: any) => {
+            console.warn("FullAudioEngine playback error code:", e.data);
+            // Skip broken/blocked video after short delay so playback never hangs
+            setTimeout(() => {
+              triggerTrackEnded();
+            }, 1200);
           },
         },
       });
@@ -106,6 +131,7 @@ export function FullAudioEngine() {
   const loadAndPlay = async (track: any) => {
     if (!playerRef.current || !isReadyRef.current) return;
     try {
+      hasTriggeredEndedRef.current = false;
       let videoId = track.youtubeId;
       if (!videoId || typeof videoId !== "string" || videoId.length !== 11) {
         // Dynamically resolve exact 11-char videoId from our internal API
@@ -124,6 +150,10 @@ export function FullAudioEngine() {
 
       if (videoId && videoId.length === 11) {
         playerRef.current.loadVideoById(videoId, 0);
+        try {
+          playerRef.current.unMute();
+          playerRef.current.setVolume(isMuted ? 0 : volume * 100);
+        } catch {}
         playerRef.current.playVideo();
       }
     } catch (e) {
@@ -136,6 +166,7 @@ export function FullAudioEngine() {
     if (!currentTrack) return;
     if (currentTrack.id !== currentTrackIdRef.current) {
       currentTrackIdRef.current = currentTrack.id;
+      hasTriggeredEndedRef.current = false;
       loadAndPlay(currentTrack);
     }
   }, [currentTrack]);
@@ -160,7 +191,7 @@ export function FullAudioEngine() {
     } catch {}
   }, [volume, isMuted]);
 
-  // Poll elapsed time and track duration
+  // Poll elapsed time and track duration + detect completion
   useEffect(() => {
     if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
 
@@ -170,15 +201,25 @@ export function FullAudioEngine() {
           try {
             const cur = playerRef.current.getCurrentTime();
             const dur = playerRef.current.getDuration();
+            const state = playerRef.current.getPlayerState?.();
+
             if (typeof cur === "number" && !isNaN(cur)) {
               setProgress(cur);
             }
             if (typeof dur === "number" && !isNaN(dur) && dur > 0) {
               setDuration(dur);
+
+              // Auto-advance check: either player reached ended state (0)
+              // or playback time reached within 0.5s of the track end (for tracks longer than 5s)
+              if (state === 0 || (dur > 5 && cur >= dur - 0.5)) {
+                triggerTrackEnded();
+              }
+            } else if (state === 0) {
+              triggerTrackEnded();
             }
           } catch {}
         }
-      }, 250);
+      }, 60);
     }
 
     return () => {

@@ -2,39 +2,49 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Pre-seeded high quality audio IDs for instant zero-latency playback
 const AUDIO_ID_CACHE = new Map<string, string>([
-  ["tycho:awake", "6XJBDX3Z0BY"],
-  ["bonobo:linked", "0W-a11Tdk7Y"],
-  ["bicep:glue", "q5rliCxX8xc"],
-  ["jon hopkins:emerald rush", "4sk0uDbM5lc"],
-  ["flume, toro y moi:the difference", "MCRiUi28UpA"],
-  ["odesza, madelyn grant:sun models", "cwLRN5sdfnA"],
-  ["khruangbin, leon bridges:texas sun", "zSWNWWREtsI"],
-  ["men i trust:show me how", "cJRFMfztgBg"],
-  ["mac demarco:chamber of reflection", "MJoSyNdffGo"],
+  // User Curated Playlists
+  ["sukha:attraction", "rbBc0IHfEKA"],
+  ["amber:two reasons", "NKqbRasvp7M"],
+  ["diljit dosanjh:sohni lagdi", "zx9-2lEXtHs"],
+  ["chani nattan:noormahal", "enidMo5izlE"],
+  ["karan aujla:boyfriend", "RYXUA32Dx4k"],
+  ["ap dhillon:by my side", "N8dexd1PqEw"],
+  ["talwiinder:gallan 4", "ZQBgxRuJQqg"],
+  ["kunwarr:piche tere", "AM7u5EmM-IQ"],
+  ["kunwarr:crazy4u", "efvZkV53RbU"],
+  ["jind universe:love exit", "t3U3x_kUIbc"],
+  ["navaan sandhu:deewane", "P1aXddE0Xuw"],
+  ["navjot ahuja:khat", "LUgpPmj6nR8"],
+  ["jind universe:high on you", "gI1Z4UHg9o0"],
+  ["sarrb:desire", "ET6EiPtAVp8"],
+  ["sarrb:restless", "vHUKcycwIwo"],
+  ["sarrb:zulfaan", "_oTgwjM6mBU"],
+  ["harkirat sangha:akhiyan", "z5Y4R4KkQZ0"],
+  ["balbir:guess it's love", "OcoCdzrAuKY"],
+  ["preetinder:uff", "TuKvoa2y3Zo"],
+  ["bir:zulfa", "Y3ok3enJ81U"],
+  ["deep dhaliwal:hypnotic", "eBLe3c4oJas"],
+  ["balbir:qabool", "5GoxoKwmpEA"],
+  ["a minxr:your eyes", "sObSGL336bk"],
+  ["gur sohal:perfection", "vxI6KZa9rGk"],
+  ["raghav & arjun:ho jayenge ghum", "SBHZo0cmfQo"],
+  ["taba chake:ho jayenge ghum", "SBHZo0cmfQo"],
+  ["drake:god's plan", "m1a_GqJf02M"],
+  ["guitar girl:it will rain - guitar version", "MrCeYSkF8ys"],
+  ["cigarettes after sex:john wayne", "M5gjHFmi2Co"],
+  ["garry sandhu:illegal weapon", "H7_yY3yr-jE"],
+  ["garry sandhu:yeh baby", "-qRIGtz7Svo"],
+  ["dilpreet dhillon:picka", "7EjyXodK6TQ"],
+  ["guru randhawa:lahore", "N3KraHFWLI0"],
+  ["mankirt aulakh:badnam", "MFbWt4HJ5vQ"],
+  ["sidhu moose wala:jaat da muqabala", "e11d3367fd3"],
+  ["bohemia:same beef", "f4fd386325f"],
+  ["sidhu moose wala:same beef", "f4fd386325f"],
   ["cigarettes after sex:apocalypse", "sElE_BfQ67s"],
-  ["clairo:bags", "L9HYJbe9Y18"],
-  ["frank ocean:nights", "r4l9bFqgMaQ"],
-  ["the weeknd:after hours", "ygTZZpVkmKg"],
-  ["ludovico einaudi, daniel hope, i virtuosi italiani:experience", "hN_q-_nGv4U"],
-  ["childish gambino:redbone", "Kp7eSUU9oy8"],
-  ["kavinsky:nightcall", "MV_3Dpw-BRY"],
-  ["sufjan stevens:mystery of love", "4WTt69YO2yo"],
-  ["bon iver:holocene", "TWcyIpul8OE"],
-  ["m83:midnight city", "dX3k_QDnzHE"],
-  ["home:resonance", "8GW6sLrK40k"],
-  ["burial:archangel", "IlEkvbRmfrA"],
-  ["overmono:so u kno", "9g2s11e1vQc"],
-  ["sigur rós:hoppípolla", "mZTb8WxEWl8"],
-  ["kiasmos:looped", "zJg5gB3q46E"],
-  ["aphex twin:avril 14th", "PeLuQ6X2ixI"],
-  ["boards of canada:roygbiv", "yT0gRc2c2wQ"],
-  ["massive attack:teardrop", "u7K72X4eo_s"],
-  ["portishead:glory box", "4qQyG8KoQ1g"],
+  ["joji:glimpse of us", "FvOpPeKSf_4"],
+  ["beach house:space song", "RBtlPT23PTM"],
   ["steve lacy:dark red", "sRJNWkHkXhE"],
   ["tv girl:lovers rock", "8jU6e-j_F-w"],
-  ["beach house:space song", "RBtlPT23PTM"],
-  ["joji:glimpse of us", "FvOpPeKSf_4"],
-  ["slowdive:alison", "ol787R580DU"],
 ]);
 
 export async function GET(req: NextRequest) {
@@ -46,7 +56,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing title query" }, { status: 400 });
   }
 
-  const cacheKey = `${artist.toLowerCase()}:${title.toLowerCase()}`;
+  const cleanTitle = title.replace(/\s*\(.*?\)\s*/g, "").trim().toLowerCase();
+  const primaryArtist = artist.split(",")[0].trim().toLowerCase();
+
+  const cacheKey = `${primaryArtist}:${cleanTitle}`;
   if (AUDIO_ID_CACHE.has(cacheKey)) {
     return NextResponse.json({
       videoId: AUDIO_ID_CACHE.get(cacheKey),
@@ -54,19 +67,17 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // Also check simplified artist key
-  const simpleArtist = artist.split(",")[0].trim().toLowerCase();
-  const simpleKey = `${simpleArtist}:${title.toLowerCase()}`;
-  if (AUDIO_ID_CACHE.has(simpleKey)) {
+  const fullKey = `${artist.toLowerCase()}:${title.toLowerCase()}`;
+  if (AUDIO_ID_CACHE.has(fullKey)) {
     return NextResponse.json({
-      videoId: AUDIO_ID_CACHE.get(simpleKey),
-      source: "cache-fuzzy",
+      videoId: AUDIO_ID_CACHE.get(fullKey),
+      source: "cache-full",
     });
   }
 
   // Dynamic search on YouTube
   try {
-    const query = `${artist} ${title} Official Audio`.replace(/['"()]/g, "");
+    const query = `${primaryArtist} ${cleanTitle} audio`.replace(/['"()]/g, "");
     const res = await fetch(
       "https://www.youtube.com/results?search_query=" + encodeURIComponent(query),
       {
@@ -92,7 +103,7 @@ export async function GET(req: NextRequest) {
 
   // Fallback to default iconic audio
   return NextResponse.json({
-    videoId: "sElE_BfQ67s", // Apocalypse fallback
+    videoId: "rbBc0IHfEKA", // Sukha Attraction fallback
     source: "fallback",
   });
 }

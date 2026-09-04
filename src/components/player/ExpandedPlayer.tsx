@@ -5,7 +5,23 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlayer } from "@/context/PlayerContext";
 import { formatTime } from "@/lib/utils";
-import { SpotifyOfficialPlayer } from "@/components/player/SpotifyOfficialPlayer";
+import dynamic from "next/dynamic";
+import { Ferrofluid } from "@/components/ui/Ferrofluid";
+import { GlassSurface } from "@/components/ui/GlassSurface";
+
+const Lanyard = dynamic(
+  () => import("@/components/ui/Lanyard").then((mod) => mod.Lanyard),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-72 h-[440px] rounded-2xl bg-white/[0.03] border border-white/[0.08] animate-pulse flex items-center justify-center">
+        <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+          Loading 3D Soundpass...
+        </span>
+      </div>
+    ),
+  }
+);
 import {
   ChevronDown,
   Play,
@@ -18,9 +34,32 @@ import {
   Repeat,
   Heart,
   ListMusic,
-  ExternalLink,
   ShieldCheck,
 } from "lucide-react";
+
+function getTrackBpm(track?: any): number {
+  if (!track) return 116;
+  const g = (track.genre || "").toLowerCase();
+  const t = (track.title || "").toLowerCase();
+  if (
+    g.includes("rap") ||
+    g.includes("drill") ||
+    g.includes("trap") ||
+    t.includes("hardlaunch")
+  )
+    return 130;
+  if (g.includes("punjabi")) return 124;
+  if (
+    g.includes("indie") ||
+    g.includes("folk") ||
+    g.includes("acoustic") ||
+    g.includes("guitar")
+  )
+    return 92;
+  if (g.includes("dream") || g.includes("ambient") || g.includes("slowcore"))
+    return 80;
+  return 116;
+}
 
 export function ExpandedPlayer() {
   const {
@@ -122,14 +161,36 @@ export function ExpandedPlayer() {
       transition={{ duration: 0.4 }}
       className="fixed inset-0 z-50 bg-[#050505] flex flex-col justify-between overflow-y-auto select-none"
     >
-      {/* Cinematic Ambient Background Glow */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute -top-1/4 -left-1/4 w-[150%] h-[150%] opacity-20 blur-[140px] animate-ambient-glow"
-          style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(220, 200, 170, 0.15), rgba(5, 5, 5, 0.95))`,
-          }}
+      {/* Cinematic Ambient Ferrofluid Background with Calm Beat Sync */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <Ferrofluid
+          colors={
+            currentTrack?.accentColor
+              ? [currentTrack.accentColor, "#8e8c87", "#4a4844"]
+              : ["#a3a3a3", "#737373", "#404040"]
+          }
+          speed={0.16}
+          scale={1.85}
+          turbulence={0.45}
+          fluidity={0.16}
+          rimWidth={0.18}
+          sharpness={2.0}
+          shimmer={0.3}
+          glow={1.15}
+          flowDirection="down"
+          opacity={0.25}
+          mouseInteraction={true}
+          mouseStrength={0.6}
+          mouseRadius={0.35}
+          syncToBeats={true}
+          isPlaying={isPlaying}
+          bpm={getTrackBpm(currentTrack)}
+          track={currentTrack}
+          currentTime={currentTime}
+          mixBlendMode="screen"
         />
+        {/* Soft nocturnal vignette so center artwork and controls remain razor sharp */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(5,5,5,0.7)_60%,_rgba(5,5,5,0.98)_100%)] pointer-events-none" />
       </div>
 
       {/* Top Bar */}
@@ -143,8 +204,8 @@ export function ExpandedPlayer() {
         </button>
 
         <div className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-[#8e8c87] font-mono">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#1DB954]" />
-          <span>Official Spotify Playback</span>
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <span>LIVO High-Fidelity Audio</span>
         </div>
 
         {/* Queue Toggle */}
@@ -164,38 +225,30 @@ export function ExpandedPlayer() {
       {/* Centerpiece: Floating Artwork & Editorial Typography */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-4 max-w-4xl mx-auto w-full space-y-6">
         <div className="flex flex-col items-center text-center w-full">
-          {/* Large Album Artwork with Framer Motion track transition & subtle 3D hover physics */}
-          <div
-            onMouseMove={handleArtworkMouseMove}
-            onMouseLeave={handleArtworkMouseLeave}
-            className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.95)] border border-white/[0.08] mb-6 cursor-pointer"
-            style={{
-              transform: `perspective(1000px) rotateX(${mousePos.y}deg) rotateY(${mousePos.x}deg)`,
-              transition: "transform 0.15s ease-out",
-            }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentTrack.id}
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="relative w-full h-full"
-              >
-                <Image
-                  src={currentTrack.artworkUrl}
-                  alt={currentTrack.title}
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 768px) 280px, 320px"
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Subtle glass reflection sheen */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/[0.06] pointer-events-none" />
+          {/* 3D Physics Lanyard Card with Interactive Embedded Controls */}
+          <div className="relative w-full h-[520px] sm:h-[560px] flex items-center justify-center -mt-4 -mb-2 overflow-visible">
+            <Lanyard
+              position={[0, -0.48, 10.4]}
+              gravity={[0, -32, 0]}
+              fov={22}
+              cardScale={2.9}
+              lanyardWidth={1.35}
+              frontImage={currentTrack.artworkUrl}
+              track={currentTrack}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              duration={duration}
+              isShuffle={isShuffle}
+              isRepeat={isRepeat}
+              isSaved={isSaved}
+              onTogglePlay={togglePlay}
+              onNextTrack={nextTrack}
+              onPrevTrack={previousTrack}
+              onToggleShuffle={toggleShuffle}
+              onToggleRepeat={toggleRepeat}
+              onSeek={seek}
+              onToggleSave={() => toggleSaveTrack(currentTrack)}
+            />
           </div>
 
           {/* Track Title and Artist in Editorial Typography */}
@@ -222,122 +275,127 @@ export function ExpandedPlayer() {
         </div>
 
         {/* Actual Music Player Controls */}
-        <div className="w-full max-w-xl space-y-6">
-          {/* Interactive Timeline Scrubber */}
-          <div className="space-y-2">
-            <div
-              onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-                seek(ratio * duration);
-              }}
-              className="group relative h-2 w-full bg-white/[0.08] hover:bg-white/[0.16] rounded-full overflow-hidden cursor-pointer transition-colors"
-            >
+        <GlassSurface
+          width="100%"
+          height="auto"
+          borderRadius={24}
+          borderWidth={0.06}
+          brightness={50}
+          backgroundOpacity={0.2}
+          saturation={1.35}
+          distortionScale={-150}
+          displace={1}
+          blur={12}
+          contentClassName="!p-0"
+          className="w-full max-w-xl border border-white/[0.12] shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+        >
+          <div className="w-full p-5 sm:p-6 space-y-5">
+            {/* Interactive Timeline Scrubber */}
+            <div className="space-y-2">
               <div
-                className="h-full bg-gradient-to-r from-emerald-400 to-white transition-all duration-100 ease-out"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-            <div className="flex items-center justify-between text-xs font-mono text-[#8e8c87]">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-          </div>
-
-          {/* Central Transport Controls */}
-          <div className="flex items-center justify-center gap-6">
-            <button
-              onClick={toggleShuffle}
-              className={`p-2.5 rounded-full transition-colors cursor-pointer ${
-                isShuffle ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
-              }`}
-              title="Shuffle"
-            >
-              <Shuffle className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={previousTrack}
-              className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-              title="Previous Track"
-            >
-              <SkipBack className="w-6 h-6 fill-current" />
-            </button>
-
-            <button
-              onClick={togglePlay}
-              className="w-16 h-16 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer"
-              title={isPlaying ? "Pause" : "Play"}
-            >
-              {isPlaying ? (
-                <Pause className="w-7 h-7 fill-current" />
-              ) : (
-                <Play className="w-7 h-7 fill-current ml-1" />
-              )}
-            </button>
-
-            <button
-              onClick={nextTrack}
-              className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
-              title="Next Track"
-            >
-              <SkipForward className="w-6 h-6 fill-current" />
-            </button>
-
-            <button
-              onClick={toggleRepeat}
-              className={`p-2.5 rounded-full transition-colors cursor-pointer ${
-                isRepeat ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
-              }`}
-              title="Repeat"
-            >
-              <Repeat className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Volume Slider & Spotify Attribution */}
-          <div className="flex items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
-            {/* Volume */}
-            <div className="flex items-center gap-2 w-40">
-              <button
-                onClick={toggleMute}
-                className="text-[#8e8c87] hover:text-white transition-colors cursor-pointer"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const clickX = e.clientX - rect.left;
+                  const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+                  seek(ratio * duration);
+                }}
+                className="group relative h-2 w-full bg-white/[0.08] hover:bg-white/[0.16] rounded-full overflow-hidden cursor-pointer transition-colors"
               >
-                {isMuted || volume === 0 ? (
-                  <VolumeX className="w-4 h-4" />
+                <div
+                  className="h-full bg-gradient-to-r from-emerald-400 to-white transition-all duration-100 ease-out"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between text-xs font-mono text-[#8e8c87]">
+                <span>{formatTime(currentTime)}</span>
+                <span>{formatTime(duration)}</span>
+              </div>
+            </div>
+
+            {/* Central Transport Controls */}
+            <div className="flex items-center justify-center gap-6">
+              <button
+                onClick={toggleShuffle}
+                className={`p-2.5 rounded-full transition-colors cursor-pointer ${
+                  isShuffle ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
+                }`}
+                title="Shuffle"
+              >
+                <Shuffle className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={previousTrack}
+                className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                title="Previous Track"
+              >
+                <SkipBack className="w-6 h-6 fill-current" />
+              </button>
+
+              <button
+                onClick={togglePlay}
+                className="w-16 h-16 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer"
+                title={isPlaying ? "Pause" : "Play"}
+              >
+                {isPlaying ? (
+                  <Pause className="w-7 h-7 fill-current" />
                 ) : (
-                  <Volume2 className="w-4 h-4" />
+                  <Play className="w-7 h-7 fill-current ml-1" />
                 )}
               </button>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={isMuted ? 0 : volume}
-                onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-full h-1 bg-white/10 rounded-full accent-white cursor-pointer"
-              />
+
+              <button
+                onClick={nextTrack}
+                className="p-3 rounded-full text-[#8e8c87] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                title="Next Track"
+              >
+                <SkipForward className="w-6 h-6 fill-current" />
+              </button>
+
+              <button
+                onClick={toggleRepeat}
+                className={`p-2.5 rounded-full transition-colors cursor-pointer ${
+                  isRepeat ? "text-emerald-400" : "text-[#8e8c87] hover:text-white"
+                }`}
+                title="Repeat"
+              >
+                <Repeat className="w-5 h-5" />
+              </button>
             </div>
 
-            {/* Credit to Spotify */}
-            <div className="flex items-center gap-2 text-xs font-mono text-[#8e8c87]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Full Song Audio • Powered by Spotify</span>
-              <a
-                href={currentTrack.spotifyUrl || `https://open.spotify.com/track/${currentTrack.spotifyId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-emerald-400 transition-colors flex items-center gap-1 text-[11px]"
-                title="Open in Spotify"
-              >
-                <span>Spotify</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+            {/* Volume Slider & Spotify Attribution */}
+            <div className="flex items-center justify-between gap-4 pt-2 border-t border-white/[0.06]">
+              {/* Volume */}
+              <div className="flex items-center gap-2 w-40">
+                <button
+                  onClick={toggleMute}
+                  className="text-[#8e8c87] hover:text-white transition-colors cursor-pointer"
+                >
+                  {isMuted || volume === 0 ? (
+                    <VolumeX className="w-4 h-4" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </button>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={isMuted ? 0 : volume}
+                  onChange={(e) => setVolume(parseFloat(e.target.value))}
+                  className="w-full h-1 bg-white/10 rounded-full accent-white cursor-pointer"
+                />
+              </div>
+
+              {/* Audio Engine Status */}
+              <div className="flex items-center gap-2 text-xs font-mono text-[#8e8c87]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>LIVO High-Fidelity Audio • Master Quality</span>
+              </div>
             </div>
           </div>
-        </div>
+        </GlassSurface>
       </main>
 
       {/* Bottom Secondary Controls Bar */}
@@ -356,17 +414,6 @@ export function ExpandedPlayer() {
                 className={`w-4 h-4 ${isSaved ? "fill-[#f5f4f0]" : ""}`}
               />
             </button>
-
-            <a
-              href={currentTrack.spotifyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#8e8c87] hover:text-[#1DB954] transition-all text-[11px]"
-              title="Open in Spotify"
-            >
-              <span>Spotify</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
           </div>
 
           {/* Sequential Navigation */}

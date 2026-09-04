@@ -9,6 +9,7 @@ export interface Track {
   genre?: string;
   year?: number;
   bpm?: number;
+  accentColor?: string;
   spotifyId: string;
   spotifyUrl: string;
   spotifyUri: string;

@@ -9,11 +9,12 @@ import { Search, Play, ArrowUpRight } from "lucide-react";
 
 const CATEGORIES = [
   { label: "All Archives", value: "all" },
-  { label: "Late Night", value: "late-night" },
-  { label: "Deep Focus", value: "focus" },
-  { label: "Dusk & Acoustic", value: "discover" },
-  { label: "Kinetic & Drive", value: "workout" },
-  { label: "Permanent Classics", value: "classics" },
+  { label: "Modern Punjabi", value: "trending" },
+  { label: "Indie & Acoustic", value: "discover" },
+  { label: "Heritage Classics", value: "classics" },
+  { label: "Hollywood Rap", value: "workout" },
+  { label: "Guitar Covers", value: "focus" },
+  { label: "Late Night Dream Pop", value: "late-night" },
 ];
 
 export default function PlaylistsPage() {
@@ -53,8 +54,7 @@ export default function PlaylistsPage() {
               The Sound Archives.
             </h1>
             <p className="mt-2 text-sm sm:text-base text-[#8e8c87] font-light max-w-xl">
-              12 curated soundscapes engineered for distinct psychological states,
-              hours, and environments.
+              6 personal sound archives curated across modern Punjabi, Indian indie, heritage classics, Hollywood rap, acoustic covers, and dream pop.
             </p>
           </div>
 

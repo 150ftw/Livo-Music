@@ -101,21 +101,6 @@ export function TrackRow({ track, index, queueContext }: TrackRowProps) {
 
       {/* Right: Heart & Duration */}
       <div className="flex items-center gap-4 shrink-0">
-        {/* Spotify link */}
-        {track.spotifyUrl && (
-          <a
-            href={track.spotifyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="p-1.5 rounded-full transition-colors text-[#4a4844] opacity-0 group-hover:opacity-100 hover:text-[#1DB954]"
-            title="Open on Spotify"
-          >
-            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.498 17.306c-.216.353-.674.467-1.027.25-2.816-1.721-6.36-2.11-10.536-1.157-.404.093-.807-.156-.9-.56-.093-.404.156-.807.56-.9 4.571-1.045 8.492-.596 11.653 1.34.353.216.467.674.25 1.027zm1.467-3.262c-.272.443-.852.583-1.295.311-3.223-1.981-8.138-2.553-11.95-1.396-.499.151-1.027-.134-1.178-.633-.151-.499.134-1.027.633-1.178 4.358-1.322 9.776-.682 13.479 1.593.443.272.583.852.311 1.303zm.126-3.41c-3.865-2.295-10.238-2.506-13.918-1.39-.592.18-1.218-.155-1.398-.747-.18-.592.155-1.218.747-1.398 4.232-1.285 11.267-1.037 15.698 1.593.533.316.706 1.005.39 1.538-.316.533-1.005.706-1.539.404z" />
-            </svg>
-          </a>
-        )}
 
         <button
           onClick={handleSaveClick}

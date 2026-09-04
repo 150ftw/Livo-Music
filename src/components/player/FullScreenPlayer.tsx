@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePlayer } from "@/context/PlayerContext";
 import { formatTime } from "@/lib/utils";
 import { VisualizerBar } from "./VisualizerBar";
-import { SpotifyLogo } from "@/components/ui/SpotifyLogo";
+import { Ferrofluid } from "@/components/ui/Ferrofluid";
 import {
   Play,
   Pause,
@@ -74,11 +74,31 @@ export function FullScreenPlayer() {
       aria-label="Expanded Music Player"
       className="fixed inset-0 z-50 bg-[#070709] text-white flex flex-col justify-between overflow-hidden animate-in fade-in duration-300 select-none"
     >
-      {/* Ambient Blurred Artwork Backdrop */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-        <div
-          className="absolute -inset-10 bg-cover bg-center filter blur-3xl scale-125 transition-all duration-1000"
-          style={{ backgroundImage: `url(${currentTrack.artworkUrl})` }}
+      {/* Ambient Ferrofluid & Blurred Artwork Backdrop */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30 z-0">
+        <Ferrofluid
+          colors={
+            currentTrack?.accentColor
+              ? [currentTrack.accentColor, "#8e8c87", "#4a4844"]
+              : ["#a3a3a3", "#737373", "#404040"]
+          }
+          speed={0.16}
+          scale={1.85}
+          turbulence={0.45}
+          fluidity={0.16}
+          rimWidth={0.18}
+          sharpness={2.0}
+          shimmer={0.3}
+          glow={1.15}
+          flowDirection="down"
+          opacity={0.25}
+          mouseInteraction={true}
+          mouseStrength={0.6}
+          syncToBeats={true}
+          isPlaying={isPlaying}
+          track={currentTrack}
+          currentTime={progress}
+          mixBlendMode="screen"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/80 to-[#070709]/60" />
       </div>
@@ -165,15 +185,10 @@ export function FullScreenPlayer() {
             </p>
 
             <div className="pt-2 flex items-center justify-center lg:justify-start gap-3">
-              <a
-                href={currentTrack.spotifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold text-xs transition-transform hover:scale-105 shadow-lg shadow-[#1DB954]/25"
-              >
-                <SpotifyLogo className="w-4 h-4 text-black" />
-                <span>Play Full Song on Spotify</span>
-              </a>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-white/90 text-xs font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>LIVO High-Fidelity Audio</span>
+              </div>
             </div>
           </div>
         </div>
